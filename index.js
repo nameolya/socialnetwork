@@ -4,7 +4,7 @@ const compression = require("compression");
 const cookieSession = require("cookie-session");
 const db = require("./db");
 const { hash, compare } = require("./bc");
-// const csurf = require("csurf");
+const csurf = require("csurf");
 
 let secret;
 if (process.env.PORT) {
@@ -36,6 +36,14 @@ if (process.env.NODE_ENV != "production") {
 } else {
     app.use("/bundle.js", (req, res) => res.sendFile(`${__dirname}/bundle.js`));
 }
+
+app.use(csurf());
+
+app.use(function (req, res, next) {
+    res.cookie("mytoken", req.csrfToken());
+    console.log("req.csrfToken():", csrfToken());
+    next();
+});
 
 app.get("/welcome", (req, res) => {
     console.log(`ran ${req.method} at ${req.url} route`);
