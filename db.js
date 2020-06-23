@@ -10,3 +10,9 @@ module.exports.addAccount = (first, last, email, hashedPw) => {
         [first, last, email, hashedPw]
     );
 };
+
+module.exports.getHashedPw = (email) => {
+    return db.query(`SELECT id, first, password FROM users WHERE email = $1`, [
+        email,
+    ]);
+};

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "./axios";
 import { Link } from "react-router-dom";
 
-class Registration extends Component {
+class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -22,7 +22,7 @@ class Registration extends Component {
     submit() {
         console.log("submit request!");
         axios
-            .post("/register", this.state)
+            .post("/login", this.state)
             .then(({ data }) => {
                 console.log("data from server:", data);
                 if (data.success) {
@@ -39,21 +39,11 @@ class Registration extends Component {
     render() {
         return (
             <div>
-                <h1>Registration component:</h1>
+                <h1>Login Component:</h1>
                 {this.state.error && (
                     <div> Something went wrong, please try again! </div>
                 )}
                 <form>
-                    <input
-                        name="first"
-                        placeholder="first name"
-                        onChange={(e) => this.handleChange(e)}
-                    />
-                    <input
-                        name="last"
-                        placeholder="last name"
-                        onChange={(e) => this.handleChange(e)}
-                    />
                     <input
                         name="email"
                         placeholder="email"
@@ -68,10 +58,10 @@ class Registration extends Component {
                     />
                     <button onClick={() => this.submit()}>Submit</button>
                 </form>
-                <Link to="/login"> Login</Link>
+                <Link to="/"> Register</Link>
             </div>
         );
     }
 }
 
-export default Registration;
+export default Login;

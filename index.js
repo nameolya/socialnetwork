@@ -47,7 +47,7 @@ app.use(function (req, res, next) {
 app.get("/welcome", (req, res) => {
     console.log(`ran ${req.method} at ${req.url} route`);
     if (req.session.userID) {
-        res.redirect("/");
+        res.redirect("/login");
     } else {
         res.sendFile(__dirname + "/index.html");
     }
@@ -61,7 +61,7 @@ app.get("*", (req, res) => {
         res.sendFile(__dirname + "/index.html");
     }
 });
-
+////---- REGISTER---
 app.post("/register", (req, res) => {
     console.log(`ran ${req.method} at ${req.url} route`);
     console.log("req.body /register:", req.body);
@@ -93,6 +93,40 @@ app.post("/register", (req, res) => {
             })
             .catch((err) => {
                 console.log("error in hash:", err);
+                res.json({ success: false });
+            });
+    } else {
+        console.log("the form is not filled in properly");
+        res.json({ success: false });
+    }
+});
+
+///---LOG IN----
+
+app.post("/login", (req, res) => {
+    console.log("req.session.userID:", req.session.userID);
+    console.log(`ran ${req.method} at ${req.url} route`);
+    if (req.body.email && req.body.password) {
+        db.getHashedPw(req.body.email)
+            .then((results) => {
+                console.log("hashed password and id:", results);
+                compare(req.body.password, results.rows[0].password).then(
+                    (match) => {
+                        console.log("match yes/no:", match);
+                        if (match) {
+                            req.session.userID = results.rows[0].id;
+                            req.session.userName = results.rows[0].first;
+                            console.log("req.session:", req.session);
+                            res.json({ success: true });
+                        } else {
+                            console.log("password doesn't match");
+                            res.json({ success: false });
+                        }
+                    }
+                );
+            })
+            .catch((err) => {
+                console.log("error in getHashedPw", err);
                 res.json({ success: false });
             });
     } else {
