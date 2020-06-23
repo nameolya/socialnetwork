@@ -41,7 +41,6 @@ app.use(csurf());
 
 app.use(function (req, res, next) {
     res.cookie("mytoken", req.csrfToken());
-    console.log("req.csrfToken():", csrfToken());
     next();
 });
 
