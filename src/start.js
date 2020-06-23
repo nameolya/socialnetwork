@@ -1,13 +1,17 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-ReactDOM.render(
-    <HelloWorld />,
-    document.querySelector('main')
-);
+import Welcome from "./welcome";
 
-function HelloWorld() {
-    return (
-        <div>Hello, World!</div>
-    );
+let elem;
+
+// this will be truthy or falsy:
+const userIsNotLoggedIn = location.pathname === "/welcome";
+
+if (!userIsNotLoggedIn) {
+    elem = <h1>Here will be the social network page</h1>;
+} else {
+    elem = <Welcome />;
 }
+
+ReactDOM.render(elem, document.querySelector("main"));
