@@ -58,6 +58,7 @@ class Login extends Component {
                     />
                     <button onClick={() => this.submit()}>Submit</button>
                 </form>
+                <Link to="/reset"> Reset password </Link>
                 <Link to="/"> Register</Link>
             </div>
         );

@@ -5,6 +5,8 @@ const cookieSession = require("cookie-session");
 const db = require("./db");
 const { hash, compare } = require("./bc");
 const csurf = require("csurf");
+const cryptoRandomString = require("crypto-random-string");
+const ses = require("./ses");
 
 let secret;
 if (process.env.PORT) {
@@ -61,6 +63,71 @@ app.get("*", (req, res) => {
         res.sendFile(__dirname + "/index.html");
     }
 });
+///---RESET--(1)----
+
+app.post("/reset/start", (req, res) => {
+    console.log(`ran ${req.method} at ${req.url} route`);
+    console.log("req.body /reset/start:", req.body);
+    if (req.body.email) {
+        db.getUserByEmail(req.body.email)
+            .then((results) => {
+                if (results.rows[0]) {
+                    console.log("results.rows[0]", results.rows[0]);
+                    const secretCode = cryptoRandomString({ length: 6 });
+                    console.log("secretCode:", secretCode);
+                    Promise.all([
+                        ses.sendEmail(
+                            results.rows[0].email,
+                            results.rows[0].first,
+                            secretCode
+                        ),
+                        db.addResetCode(results.rows[0].email, secretCode),
+                    ]).then(() => {
+                        res.json({ success: true });
+                    });
+                } else {
+                    res.json({ success: false });
+                }
+            })
+            .catch((err) => {
+                console.log("error in addAccount:", err);
+                res.json({ success: false });
+            });
+    } else {
+        console.log("the form is not filled in properly");
+        res.json({ success: false });
+    }
+});
+///---RESET-(2)---
+
+app.post("/reset/verify", (req, res) => {
+    console.log(`ran ${req.method} at ${req.url} route`);
+    console.log("req.body /reset/verify:", req.body);
+    if (req.body.code && req.body.password) {
+        db.getCode(req.body.code)
+            .then((results) => {
+                if (results.rows[0]) {
+                    hash(req.body.password)
+                        .then((hashedPw) => {
+                            db.updatePass(results.rows[0].email, hashedPw);
+                        })
+                        .then(() => {
+                            res.json({ success: true });
+                        });
+                } else {
+                    res.json({ success: false });
+                }
+            })
+            .catch((err) => {
+                console.log("error in getCode:", err);
+                res.json({ success: false });
+            });
+    } else {
+        console.log("the form is not filled in properly");
+        res.json({ success: false });
+    }
+});
+
 ////---- REGISTER---
 app.post("/register", (req, res) => {
     console.log(`ran ${req.method} at ${req.url} route`);
