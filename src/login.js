@@ -19,7 +19,8 @@ class Login extends Component {
         );
     }
 
-    submit() {
+    submit(e) {
+        e.preventDefault();
         console.log("submit request!");
         axios
             .post("/login", this.state)
@@ -56,7 +57,7 @@ class Login extends Component {
                         type="password"
                         onChange={(e) => this.handleChange(e)}
                     />
-                    <button onClick={() => this.submit()}>Submit</button>
+                    <button onClick={(e) => this.submit(e)}>Submit</button>
                 </form>
                 <Link to="/reset"> Reset password </Link>
                 <Link to="/"> Register</Link>

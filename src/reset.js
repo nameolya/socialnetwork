@@ -21,7 +21,8 @@ class Reset extends Component {
         );
     }
 
-    submitEmail() {
+    submitEmail(e) {
+        e.preventDefault();
         console.log("submit email request!");
         axios
             .post("/reset/start", this.state)
@@ -39,7 +40,8 @@ class Reset extends Component {
             .catch((err) => console.log("error in axios.post:", err));
     }
 
-    submitCodeAndPassword() {
+    submitCodeAndPassword(e) {
+        e.preventDefault();
         console.log("submit pass reset code!");
         axios
             .post("/reset/verify", this.state)
@@ -74,7 +76,7 @@ class Reset extends Component {
                             type="email"
                             onChange={(e) => this.handleChange(e)}
                         />
-                        <button onClick={() => this.submitEmail()}>
+                        <button onClick={(e) => this.submitEmail(e)}>
                             Submit
                         </button>
                     </form>
@@ -103,7 +105,7 @@ class Reset extends Component {
                             type="password"
                             onChange={(e) => this.handleChange(e)}
                         />
-                        <button onClick={() => this.submitCodeAndPassword()}>
+                        <button onClick={(e) => this.submitCodeAndPassword(e)}>
                             Submit
                         </button>
                     </form>

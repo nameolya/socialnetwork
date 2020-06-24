@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-
+import App from "./app";
 import Welcome from "./welcome";
 
 let elem;
@@ -9,7 +9,7 @@ let elem;
 const userIsNotLoggedIn = location.pathname === "/welcome";
 
 if (!userIsNotLoggedIn) {
-    elem = <h1>Here will be the social network page</h1>;
+    elem = <App />;
 } else {
     elem = <Welcome />;
 }

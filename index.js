@@ -49,7 +49,7 @@ app.use(function (req, res, next) {
 app.get("/welcome", (req, res) => {
     console.log(`ran ${req.method} at ${req.url} route`);
     if (req.session.userID) {
-        res.redirect("/login");
+        res.redirect("/");
     } else {
         res.sendFile(__dirname + "/index.html");
     }
