@@ -9,12 +9,15 @@ export default function ProfilePic({ first, last, imageUrl, toggleModal }) {
         toggleModal
     );
     imageUrl = imageUrl || "/account1.png";
+    let fullName = first + " " + last;
     return (
         <div>
-            <img onClick={toggleModal} className="profile-pic" src={imageUrl} />
-            <p>
-                {first} {last}
-            </p>
+            <img
+                onClick={toggleModal}
+                className="profile-pic"
+                src={imageUrl}
+                alt={fullName}
+            />
         </div>
     );
 }

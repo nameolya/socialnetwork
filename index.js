@@ -78,15 +78,6 @@ app.get("/welcome", (req, res) => {
     }
 });
 
-app.get("*", (req, res) => {
-    console.log(`ran ${req.method} at ${req.url} route`);
-    if (!req.session.userID) {
-        res.redirect("/welcome");
-    } else {
-        res.sendFile(__dirname + "/index.html");
-    }
-});
-
 app.get("/user", (req, res) => {
     console.log(`ran ${req.method} at ${req.url} route`);
     console.log("req.session.userID:", req.session.userID);
@@ -97,26 +88,35 @@ app.get("/user", (req, res) => {
         })
         .catch((err) => {
             console.log("error in getUserById:", err);
+            res.sendStatus(500);
         });
 });
 ///---ADD--PROFILE--PIC
-app.post("/user/pic-upload", uploader.single("file"), s3.upload, (req, res) => {
-    console.log("congrats!");
-    console.log("req.file:", req.file);
-    console.log("s3Url:", s3Url);
-    console.log("req.file.filename:", req.file.filename);
+app.post(
+    "/user/pic-upload",
+    uploader.single("image"),
+    s3.upload,
+    (req, res) => {
+        console.log("congrats!");
+        console.log("req.file:", req.file);
+        console.log("s3Url:", s3Url);
+        console.log("req.file.filename:", req.file.filename);
 
-    let s3UrlProperty;
-    s3UrlProperty = s3Url.s3Url;
-    db.addUserPic(`${s3UrlProperty}${req.file.filename}`, req.session.userID)
-        .then((results) => {
-            console.log("addUserPic results.rows[0]:", results.rows[0]);
-            res.json(results.rows[0]);
-        })
-        .catch((err) => {
-            console.log("err in addUserPic:", err);
-        });
-});
+        let s3UrlProperty;
+        s3UrlProperty = s3Url.s3Url;
+        db.addUserPic(
+            `${s3UrlProperty}${req.file.filename}`,
+            req.session.userID
+        )
+            .then((results) => {
+                console.log("addUserPic results.rows[0]:", results.rows[0]);
+                res.json(results.rows[0]);
+            })
+            .catch((err) => {
+                console.log("err in addUserPic:", err);
+            });
+    }
+);
 
 ///---RESET--(1)----
 
@@ -257,6 +257,15 @@ app.post("/login", (req, res) => {
     } else {
         console.log("the form is not filled in properly");
         res.json({ success: false });
+    }
+});
+
+app.get("*", (req, res) => {
+    console.log(`ran ${req.method} at ${req.url} route`);
+    if (!req.session.userID) {
+        res.redirect("/welcome");
+    } else {
+        res.sendFile(__dirname + "/index.html");
     }
 });
 

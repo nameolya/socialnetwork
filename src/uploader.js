@@ -13,23 +13,17 @@ export default class Uploader extends React.Component {
         console.log("uploader mounted!");
     }
     handleChange(e) {
-        // console.log("e.target.value:", e.target.value);
-        // console.log("e.target.name:", e.target.name);
-        // this.setState(
-        //     {
-        //         [e.target.name]: e.target.value,
-        //     },
-        //     () => console.log("this.state:", this.state)
-        // );
-
         let file = e.target.files[0];
         let formData = new FormData();
         formData.append("image", file);
         axios
             .post("/user/pic-upload", formData)
             .then((data) => {
-                console.log("data from server in axios POST pic upload:", data);
-                this.props.methodInApp(data);
+                console.log(
+                    "data from server in axios POST pic upload:",
+                    data.data.imageUrl
+                );
+                this.props.newUserImage(data.data.imageUrl);
             })
             .catch((err) => console.log("error in axios.post:", err));
     }

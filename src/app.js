@@ -22,10 +22,10 @@ export default class App extends React.Component {
         });
     }
 
-    methodInApp(arg) {
+    newUserImage(arg) {
         console.log("Im running in App!!! and my argument is: ", arg);
         this.setState({ imageUrl: arg });
-        this.toggleModal();
+        // this.toggleModal();
     }
 
     componentDidMount() {
@@ -57,7 +57,7 @@ export default class App extends React.Component {
                 />
                 {this.state.uploaderIsVisible && (
                     <Uploader
-                        methodInApp={this.methodInApp}
+                        newUserImage={(arg) => this.newUserImage(arg)}
                         toggleModal={() => this.toggleModal()}
                     />
                 )}

@@ -44,12 +44,16 @@ module.exports.updatePass = (email, password) => {
     ]);
 };
 
-module.exports.addUserPic = (id) => {
-    return db.query(`SELECT first, last, imageUrl FROM users WHERE id = $1`, [
-        id,
-    ]);
+module.exports.getUserById = (id) => {
+    return db.query(
+        `SELECT first, last, imageUrl AS "imageUrl" FROM users WHERE id = $1`,
+        [id]
+    );
 };
 
-module.exports.ddUserPic = (imageUrl, id) => {
-    return db.query(`UPDATE users SET imageUrl=$1 WHERE id=$2`, [imageUrl, id]);
+module.exports.addUserPic = (imageUrl, id) => {
+    return db.query(
+        `UPDATE users SET imageUrl=$1 WHERE id=$2 RETURNING imageUrl AS "imageUrl"`,
+        [imageUrl, id]
+    );
 };
