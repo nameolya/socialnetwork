@@ -43,3 +43,13 @@ module.exports.updatePass = (email, password) => {
         password,
     ]);
 };
+
+module.exports.addUserPic = (id) => {
+    return db.query(`SELECT first, last, imageUrl FROM users WHERE id = $1`, [
+        id,
+    ]);
+};
+
+module.exports.ddUserPic = (imageUrl, id) => {
+    return db.query(`UPDATE users SET imageUrl=$1 WHERE id=$2`, [imageUrl, id]);
+};

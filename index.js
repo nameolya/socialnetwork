@@ -7,6 +7,11 @@ const { hash, compare } = require("./bc");
 const csurf = require("csurf");
 const cryptoRandomString = require("crypto-random-string");
 const ses = require("./ses");
+const multer = require("multer"); //npm pkg for handling multipart/form data on server side, adds the file and the body to the request object
+const uidSafe = require("uid-safe"); // npm pkg that generates random and unique string
+const path = require("path"); // core module, helps with handling files by providing path
+const s3 = require("./s3");
+const s3Url = require("./config.json");
 
 let secret;
 if (process.env.PORT) {
@@ -27,6 +32,24 @@ app.use(express.static("public"));
 app.use(compression());
 
 app.use(express.json());
+
+const diskStorage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, __dirname + "/uploads");
+    },
+    filename: function (req, file, callback) {
+        uidSafe(24).then(function (uid) {
+            callback(null, uid + path.extname(file.originalname));
+        });
+    },
+});
+
+const uploader = multer({
+    storage: diskStorage,
+    limits: {
+        fileSize: 2097152,
+    },
+});
 
 if (process.env.NODE_ENV != "production") {
     app.use(
@@ -63,6 +86,38 @@ app.get("*", (req, res) => {
         res.sendFile(__dirname + "/index.html");
     }
 });
+
+app.get("/user", (req, res) => {
+    console.log(`ran ${req.method} at ${req.url} route`);
+    console.log("req.session.userID:", req.session.userID);
+    db.getUserById(req.session.userID)
+        .then((results) => {
+            console.log("results.rows[0]:", results.rows[0]);
+            res.json(results.rows[0]);
+        })
+        .catch((err) => {
+            console.log("error in getUserById:", err);
+        });
+});
+///---ADD--PROFILE--PIC
+app.post("/user/pic-upload", uploader.single("file"), s3.upload, (req, res) => {
+    console.log("congrats!");
+    console.log("req.file:", req.file);
+    console.log("s3Url:", s3Url);
+    console.log("req.file.filename:", req.file.filename);
+
+    let s3UrlProperty;
+    s3UrlProperty = s3Url.s3Url;
+    db.addUserPic(`${s3UrlProperty}${req.file.filename}`, req.session.userID)
+        .then((results) => {
+            console.log("addUserPic results.rows[0]:", results.rows[0]);
+            res.json(results.rows[0]);
+        })
+        .catch((err) => {
+            console.log("err in addUserPic:", err);
+        });
+});
+
 ///---RESET--(1)----
 
 app.post("/reset/start", (req, res) => {
@@ -183,7 +238,10 @@ app.post("/login", (req, res) => {
                         if (match) {
                             req.session.userID = results.rows[0].id;
                             req.session.userName = results.rows[0].first;
-                            console.log("req.session:", req.session);
+                            console.log(
+                                "req.session.userID:",
+                                req.session.userID
+                            );
                             res.json({ success: true });
                         } else {
                             console.log("password doesn't match");
