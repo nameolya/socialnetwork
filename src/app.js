@@ -1,16 +1,14 @@
 import React from "react";
-import Logo from "./logo";
-import ProfilePic from "./profilePic";
-import Uploader from "./uploader";
 import axios from "./axios";
+import Logo from "./logo";
+import ProfilePic from "./profilepic";
+import Uploader from "./uploader";
+import Profile from "./profile";
 
 export default class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            ///hardcoded, this should come from axior request to database and setState
-            // first: "Olga",
-            // last: "Iva",
             uploaderIsVisible: false,
         };
     }
@@ -23,9 +21,13 @@ export default class App extends React.Component {
     }
 
     newUserImage(arg) {
-        console.log("Im running in App!!! and my argument is: ", arg);
+        console.log("newUserImage is running in App, argument is: ", arg);
         this.setState({ imageUrl: arg });
-        // this.toggleModal();
+    }
+
+    changeBio(arg) {
+        console.log("changeBio is running in App, argument is: ", arg);
+        this.setState({ bio: arg });
     }
 
     componentDidMount() {
@@ -39,6 +41,7 @@ export default class App extends React.Component {
                     first: data.first,
                     last: data.last,
                     imageUrl: data.imageUrl,
+                    bio: data.bio,
                 });
             })
             .catch((err) => console.log("error in axios.get:", err));
@@ -61,6 +64,15 @@ export default class App extends React.Component {
                         toggleModal={() => this.toggleModal()}
                     />
                 )}
+
+                <Profile
+                    first={this.state.first}
+                    last={this.state.last}
+                    imageUrl={this.state.imageUrl}
+                    bio={this.state.bio}
+                    toggleModal={() => this.toggleModal()}
+                    changeBio={(arg) => this.changeBio(arg)}
+                />
             </div>
         );
     }

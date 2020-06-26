@@ -91,13 +91,29 @@ app.get("/user", (req, res) => {
             res.sendStatus(500);
         });
 });
+///---ADD--BIO---
+app.post("/user/edit-bio", (req, res) => {
+    console.log(`ran ${req.method} at ${req.url} route`);
+    console.log("req.body /user/edit-bio:", req.body);
+
+    db.addUserBio(req.body.draftbio, req.session.userID)
+        .then((results) => {
+            console.log("addUserBio results.rows[0]:", results.rows[0]);
+            res.json(results.rows[0]);
+        })
+        .catch((err) => {
+            console.log("err in addUserBio:", err);
+            res.sendStatus(500);
+        });
+});
+
 ///---ADD--PROFILE--PIC
 app.post(
     "/user/pic-upload",
     uploader.single("image"),
     s3.upload,
     (req, res) => {
-        console.log("congrats!");
+        console.log(`ran ${req.method} at ${req.url} route`);
         console.log("req.file:", req.file);
         console.log("s3Url:", s3Url);
         console.log("req.file.filename:", req.file.filename);
@@ -114,6 +130,7 @@ app.post(
             })
             .catch((err) => {
                 console.log("err in addUserPic:", err);
+                res.sendStatus(500);
             });
     }
 );
