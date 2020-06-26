@@ -34,7 +34,8 @@ class BioEditor extends Component {
             .post("/user/edit-bio", this.state)
             .then(({ data }) => {
                 console.log("data from server:", data);
-                this.props.changeBio(data);
+                this.props.changeBio(data.bio);
+                console.log("this.props.bio after change:", this.props.bio);
                 this.setState({ bioEditorIsVisible: false });
             })
             .catch((err) => console.log("error in axios.post:", err));
@@ -50,6 +51,7 @@ class BioEditor extends Component {
                             name="draftbio"
                             rows="4"
                             cols="50"
+                            required
                             onChange={(e) => this.handleChange(e)}
                         >
                             {this.state.draftbio}
