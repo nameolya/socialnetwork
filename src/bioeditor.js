@@ -56,9 +56,7 @@ class BioEditor extends Component {
                         >
                             {this.state.draftbio}
                         </textarea>
-                        <button onClick={(e) => this.submitBio(e)}>
-                            Submit
-                        </button>
+                        <button onClick={(e) => this.submitBio(e)}>Save</button>
                     </form>
                     <p
                         onClick={() =>
@@ -76,6 +74,7 @@ class BioEditor extends Component {
                 <div>
                     <p>{this.props.bio}</p>
                     <p
+                        className="addeditbio"
                         onClick={() =>
                             this.setState({
                                 bioEditorIsVisible: true,
@@ -90,6 +89,7 @@ class BioEditor extends Component {
             return (
                 <div>
                     <p
+                        className="addeditbio"
                         onClick={() =>
                             this.setState({
                                 bioEditorIsVisible: true,

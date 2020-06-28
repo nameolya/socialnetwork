@@ -91,6 +91,25 @@ app.get("/user", (req, res) => {
             res.sendStatus(500);
         });
 });
+
+app.get("/user/:id.json", (req, res) => {
+    console.log(`ran ${req.method} at ${req.url} route`);
+    console.log("req.session.userID:", req.session.userID);
+    if (req.session.userID == req.params.id) {
+        res.json({ isSelf: true });
+    } else {
+        db.getUserById(req.params.id)
+            .then((results) => {
+                console.log("results.rows[0]:", results.rows[0]);
+                res.json(results.rows[0]);
+            })
+            .catch((err) => {
+                console.log("error in getUserById:", err);
+                res.sendStatus(500);
+            });
+    }
+});
+
 ///---ADD--BIO---
 app.post("/user/edit-bio", (req, res) => {
     console.log(`ran ${req.method} at ${req.url} route`);
