@@ -4,12 +4,14 @@ import axios from "./axios";
 export default function FindPeople() {
     const [person, setPerson] = useState("");
     const [persons, setPersons] = useState([]);
+    const [personListVisibility, setPersonListVisibility] = useState(true);
 
     useEffect(() => {
         (async () => {
             const { data } = await axios.get(`/app/persons/${person}`);
             console.log("get request /app/user/persons/person data:", data);
             setPersons(data);
+            setPersonListVisibility(false);
         })();
     }, [person]);
 
@@ -18,6 +20,7 @@ export default function FindPeople() {
             const { data } = await axios.get(`/app/persons`);
             console.log("get request /app/user/persons data:", data);
             setPersons(data);
+            setPersonListVisibility(true);
         })();
     }, []);
 
@@ -27,6 +30,8 @@ export default function FindPeople() {
 
     return (
         <div>
+            <h1>Find people</h1>
+            {personListVisibility && <p>Recently joined:</p>}
             <input
                 onChange={handleChange}
                 placeholder="who are you looking for?"

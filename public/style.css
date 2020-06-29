@@ -2,10 +2,6 @@ body {
     background: rgb(255, 255, 220);
 }
 
-.profilepic {
-    height: 80px;
-}
-
 .header {
     display: flex;
     justify-content: space-between;
@@ -15,6 +11,10 @@ body {
     display: flex;
 }
 
-.x-profilepic {
+.small {
+    height: 80px;
+}
+
+.large {
     height: 200px;
 }

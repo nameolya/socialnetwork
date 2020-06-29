@@ -60,6 +60,7 @@ export default class App extends React.Component {
                             first={this.state.first}
                             last={this.state.last}
                             imageUrl={this.state.imageUrl}
+                            imageSize="small"
                             toggleModal={() => this.toggleModal()}
                         />
                     </div>
@@ -72,6 +73,7 @@ export default class App extends React.Component {
                                 last={this.state.last}
                                 imageUrl={this.state.imageUrl}
                                 bio={this.state.bio}
+                                imageSize="large"
                                 toggleModal={() => this.toggleModal()}
                                 changeBio={(arg) => this.changeBio(arg)}
                             />

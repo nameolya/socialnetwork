@@ -12,7 +12,7 @@ export default function Profile(props) {
                     last={props.last}
                     imageUrl={props.imageUrl}
                     toggleModal={props.toggleModal}
-                    size="xl"
+                    imageSize={props.imageSize}
                 />
             </div>
 
