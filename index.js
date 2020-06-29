@@ -78,7 +78,7 @@ app.get("/welcome", (req, res) => {
     }
 });
 
-app.get("/user", (req, res) => {
+app.get("/app/user", (req, res) => {
     console.log(`ran ${req.method} at ${req.url} route`);
     console.log("req.session.userID:", req.session.userID);
     db.getUserById(req.session.userID)
@@ -88,6 +88,34 @@ app.get("/user", (req, res) => {
         })
         .catch((err) => {
             console.log("error in getUserById:", err);
+            res.sendStatus(500);
+        });
+});
+
+app.get("/app/persons/:person", (req, res) => {
+    console.log(`ran ${req.method} at ${req.url} route`);
+    console.log("/app/persons/:person req.params.person:", req.params.person);
+
+    db.getUserByName(req.params.person)
+        .then((results) => {
+            console.log("results.rows:", results.rows);
+            res.json(results.rows);
+        })
+        .catch((err) => {
+            console.log("error in getUserById:", err);
+            res.sendStatus(500);
+        });
+});
+
+app.get("/app/persons", (req, res) => {
+    console.log(`ran ${req.method} at ${req.url} route`);
+    db.getLatestUsers()
+        .then((results) => {
+            console.log("results.rows:", results.rows);
+            res.json(results.rows);
+        })
+        .catch((err) => {
+            console.log("error in getLatestUsers:", err);
             res.sendStatus(500);
         });
 });

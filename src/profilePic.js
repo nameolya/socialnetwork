@@ -13,8 +13,8 @@ export default function ProfilePic({ first, last, imageUrl, toggleModal }) {
     return (
         <div>
             <img
+                className="profilepic"
                 onClick={toggleModal}
-                className="profile-pic"
                 src={imageUrl}
                 alt={fullName}
             />

@@ -5,6 +5,7 @@ import ProfilePic from "./profilepic";
 import Uploader from "./uploader";
 import Profile from "./profile";
 import OtherProfile from "./otherprofile";
+import FindPeople from "./findpeople";
 import { BrowserRouter, Route } from "react-router-dom";
 
 export default class App extends React.Component {
@@ -35,9 +36,9 @@ export default class App extends React.Component {
     componentDidMount() {
         console.log("app mounted!");
         axios
-            .get("/user")
+            .get("/app/user")
             .then(({ data }) => {
-                console.log("data from server:", data);
+                console.log("GET request in app, data from server:", data);
 
                 this.setState({
                     first: data.first,
@@ -86,6 +87,9 @@ export default class App extends React.Component {
                             />
                         )}
                     />
+
+                    <Route path="/users" render={() => <FindPeople />} />
+
                     {this.state.uploaderIsVisible && (
                         <Uploader
                             newUserImage={(arg) => this.newUserImage(arg)}

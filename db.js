@@ -64,3 +64,14 @@ module.exports.addUserBio = (bio, id) => {
         id,
     ]);
 };
+
+module.exports.getLatestUsers = () => {
+    return db.query(`SELECT * FROM users ORDER BY id DESC LIMIT 3;`);
+};
+
+module.exports.getUserByName = (name) => {
+    return db.query(
+        `SELECT first, last, bio, imageUrl FROM users WHERE first ILIKE $1 OR last ILIKE $1 LIMIT 3;`,
+        [name + "%"]
+    );
+};

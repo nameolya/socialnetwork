@@ -1,3 +1,20 @@
 body {
-    background: pink;
+    background: rgb(255, 255, 220);
+}
+
+.profilepic {
+    height: 80px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.user-profile {
+    display: flex;
+}
+
+.x-profilepic {
+    height: 200px;
 }
