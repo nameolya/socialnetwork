@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import axios from "./axios";
+import FriendButton from "./friendbutton";
 
 export default class OtherProfile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {};
+        console.log("props in OtherProfile:", props);
     }
     async componentDidMount() {
         const id = this.props.match.params.id;
@@ -29,6 +31,7 @@ export default class OtherProfile extends React.Component {
                     {this.state.last}
                 </h1>
                 <p>{this.state.bio}</p>
+                <FriendButton otherId={this.props.match.params.id} />
             </div>
         );
     }

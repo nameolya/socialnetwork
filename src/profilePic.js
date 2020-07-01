@@ -19,7 +19,7 @@ export default function ProfilePic({
     let fullName = first + " " + last;
 
     let profilePicClass;
-    if (this.props.imageSize === "small") {
+    if (imageSize === "small") {
         profilePicClass = "small";
     } else {
         profilePicClass = "large";

@@ -18,3 +18,10 @@ CREATE TABLE reset_codes(
     code VARCHAR NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE friendships(
+  id SERIAL PRIMARY KEY,
+  sender_id INT REFERENCES users(id) NOT NULL,
+  receiver_id INT REFERENCES users(id) NOT NULL,
+  accepted BOOLEAN DEFAULT FALSE NOT NULL
+);

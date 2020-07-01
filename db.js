@@ -46,7 +46,7 @@ module.exports.updatePass = (email, password) => {
 
 module.exports.getUserById = (id) => {
     return db.query(
-        `SELECT first, last, bio, imageUrl AS "imageUrl" FROM users WHERE id = $1`,
+        `SELECT id, first, last, bio, imageUrl AS "imageUrl" FROM users WHERE id = $1`,
         [id]
     );
 };
@@ -73,5 +73,40 @@ module.exports.getUserByName = (name) => {
     return db.query(
         `SELECT first, last, bio, imageUrl FROM users WHERE first ILIKE $1 OR last ILIKE $1 LIMIT 3;`,
         [name + "%"]
+    );
+};
+
+module.exports.getFriendshipStatusById = (person, user) => {
+    return db.query(
+        `SELECT * FROM friendships WHERE (sender_id=$1 AND receiver_id=$2) OR (sender_id=$2 AND receiver_id=$1);`,
+        [person, user]
+    );
+};
+
+module.exports.acceptFriendRequest = (person, user) => {
+    return db.query(
+        `UPDATE friendships SET accepted=true WHERE sender_id=$1 AND receiver_id=$2;`,
+        [person, user]
+    );
+};
+
+module.exports.Unfriend = (person, user) => {
+    return db.query(
+        `DELETE FROM friendships WHERE (sender_id=$1 AND receiver_id=$2) OR (sender_id=$2 AND receiver_id=$1);`,
+        [person, user]
+    );
+};
+
+module.exports.addFriendRequest = (person, user) => {
+    return db.query(
+        `INSERT INTO friendships (sender_id, receiver_id) VALUES ($2, $1);`,
+        [person, user]
+    );
+};
+
+module.exports.checkFriendRequest = (person, user) => {
+    return db.query(
+        `SELECT * FROM friendships WHERE sender_id=$2 AND receiver_id=$1;`,
+        [person, user]
     );
 };

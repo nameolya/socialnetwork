@@ -91,7 +91,83 @@ app.get("/app/user", (req, res) => {
             res.sendStatus(500);
         });
 });
+///---FRIENDSHIPS----
+app.get("/app/check-friendship/:id", (req, res) => {
+    console.log(`ran ${req.method} at ${req.url} route`);
+    console.log("/app/check-friendship/:id req.params.id:", req.params.id);
 
+    db.getFriendshipStatusById(req.params.id, req.session.userID)
+        .then((results) => {
+            console.log("getFriendshipStatusById results.rows:", results.rows);
+            res.json([results.rows, req.session.userID]);
+        })
+        .catch((err) => {
+            console.log("error in getFriendshipStatusById:", err);
+            res.sendStatus(500);
+        });
+});
+
+app.post("/app/Accept-Friend-Request/:id", (req, res) => {
+    console.log(`ran ${req.method} at ${req.url} route`);
+    db.acceptFriendRequest(req.params.id, req.session.userID)
+        .then(() => {
+            res.json({ success: true });
+        })
+        .catch((err) => {
+            console.log("error in acceptFriendRequest:", err);
+            res.sendStatus({ success: false });
+        });
+});
+
+app.post("/app/Unfriend/:id", (req, res) => {
+    console.log(`ran ${req.method} at ${req.url} route`);
+    db.Unfriend(req.params.id, req.session.userID)
+        .then(() => {
+            res.json({ success: true });
+        })
+        .catch((err) => {
+            console.log("error in Unfriend:", err);
+            res.sendStatus({ success: false });
+        });
+});
+
+app.post("/app/Send-Friend-Request/:id", (req, res) => {
+    console.log(`ran ${req.method} at ${req.url} route`);
+    db.checkFriendRequest(req.params.id, req.session.userID)
+        .then((results) => {
+            console.log("checkFriendRequest results.rows:", results.rows);
+            if (results.rows.length == 0) {
+                db.addFriendRequest(req.params.id, req.session.userID)
+                    .then(() => {
+                        res.json({ success: true });
+                    })
+                    .catch((err) => {
+                        console.log("error in addFriendRequest:", err);
+                        res.sendStatus({ success: false });
+                    });
+            } else {
+                res.json({ success: true });
+            }
+        })
+        .catch((err) => {
+            console.log("error in checkFriendRequest:", err);
+            res.sendStatus({ success: false });
+        });
+});
+
+app.post("/app/Cancel-Friend-Request/:id", (req, res) => {
+    console.log(`ran ${req.method} at ${req.url} route`);
+    db.Unfriend(req.params.id, req.session.userID)
+        .then(() => {
+            res.json({ success: true });
+        })
+        .catch((err) => {
+            console.log("error in addFriendRequest:", err);
+            res.sendStatus({ success: false });
+        });
+});
+
+////----------------
 app.get("/app/persons/:person", (req, res) => {
     console.log(`ran ${req.method} at ${req.url} route`);
     console.log("/app/persons/:person req.params.person:", req.params.person);
@@ -102,7 +178,7 @@ app.get("/app/persons/:person", (req, res) => {
             res.json(results.rows);
         })
         .catch((err) => {
-            console.log("error in getUserById:", err);
+            console.log("error in getUserByName:", err);
             res.sendStatus(500);
         });
 });

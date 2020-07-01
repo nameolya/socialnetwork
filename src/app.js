@@ -45,6 +45,7 @@ export default class App extends React.Component {
                     last: data.last,
                     imageUrl: data.imageUrl,
                     bio: data.bio,
+                    id: data.id,
                 });
             })
             .catch((err) => console.log("error in axios.get:", err));
