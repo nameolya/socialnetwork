@@ -40,16 +40,16 @@ export default function FriendButton(props) {
             if (!data.success) {
                 setError(true);
             } else {
-                if ((buttonText = "Accept-Friend-Request")) {
+                if (buttonText == "Accept-Friend-Request") {
                     setButtonText("Unfriend");
                 }
-                if ((buttonText = "Send-Friend-Request")) {
+                if (buttonText == "Send-Friend-Request") {
                     setButtonText("Cancel Friend Request");
                 }
-                if ((buttonText = "Unfriend")) {
+                if (buttonText == "Unfriend") {
                     setButtonText("Send Friend Request");
                 }
-                if ((buttonText = "Cancel-Friend-Request")) {
+                if (buttonText == "Cancel-Friend-Request") {
                     setButtonText("Send Friend Request");
                 }
             }
