@@ -4,6 +4,7 @@ import axios from "./axios";
 export default function FriendButton(props) {
     console.log("props in FriendButton:", props);
     const [buttonText, setButtonText] = useState("");
+    const [error, setError] = useState(false);
 
     useEffect(() => {
         (async () => {
@@ -54,9 +55,14 @@ export default function FriendButton(props) {
                 }
             }
         } catch (err) {
-            console.log("something went wrong... make a p for that");
+            setError(true);
         }
     };
 
-    return <button onClick={(e) => onClick(e)}>{buttonText}</button>;
+    return (
+        <div>
+            {error && <p>something went wrong! try again...</p>}
+            <button onClick={(e) => onClick(e)}>{buttonText}</button>
+        </div>
+    );
 }
