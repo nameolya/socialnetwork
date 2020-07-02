@@ -1,5 +1,10 @@
-export function fn() {
+import axios from "./axios";
+
+export async function receiveFriendsWannabes() {
+    const { data } = await axios.get("/app/friends-wannabes");
+    console.log("data from axios.get /app/friends-wannabes");
     return {
-        type: "CHANGE_STATE",
+        type: "RECEIVE_FRIENDS_WANNABES",
+        friends: data,
     };
 }

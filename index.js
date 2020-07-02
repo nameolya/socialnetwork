@@ -92,6 +92,21 @@ app.get("/app/user", (req, res) => {
         });
 });
 ///---FRIENDSHIPS----
+
+app.get("/app/friends-wannabes", (req, res) => {
+    console.log(`ran ${req.method} at ${req.url} route`);
+
+    db.getFriendsById(req.session.userID)
+        .then((results) => {
+            console.log("getFriendsById results.rows:", results.rows);
+            res.json(results.rows);
+        })
+        .catch((err) => {
+            console.log("error in getFriendsById:", err);
+            res.sendStatus(500);
+        });
+});
+
 app.get("/app/check-friendship/:id", (req, res) => {
     console.log(`ran ${req.method} at ${req.url} route`);
     console.log("/app/check-friendship/:id req.params.id:", req.params.id);

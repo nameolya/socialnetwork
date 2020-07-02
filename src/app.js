@@ -6,6 +6,7 @@ import Uploader from "./uploader";
 import Profile from "./profile";
 import OtherProfile from "./otherprofile";
 import FindPeople from "./findpeople";
+import Friends from "./friends";
 import { BrowserRouter, Route } from "react-router-dom";
 
 export default class App extends React.Component {
@@ -92,6 +93,8 @@ export default class App extends React.Component {
                     />
 
                     <Route path="/users" render={() => <FindPeople />} />
+
+                    <Route path="/friends" render={() => <Friends />} />
 
                     {this.state.uploaderIsVisible && (
                         <Uploader
