@@ -13,19 +13,15 @@ const store = createStore(
     composeWithDevTools(applyMiddleware(reduxPromise))
 );
 
-let elem;
-
-// this will be truthy or falsy:
-const userIsNotLoggedIn = location.pathname === "/welcome";
-
-if (!userIsNotLoggedIn) {
-    elem = <App />;
+let component;
+if (location.pathname === "/welcome") {
+    component = <Welcome />;
 } else {
-    elem = (
+    component = (
         <Provider store={store}>
             <App />
         </Provider>
     );
 }
 
-ReactDOM.render(elem, document.querySelector("main"));
+ReactDOM.render(component, document.querySelector("main"));
