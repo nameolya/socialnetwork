@@ -17,7 +17,9 @@ export default function Friends() {
     const wannabes = useSelector(
         (state) =>
             state.friends &&
-            state.friends.filter((friend) => friend.accepted == false)
+            state.friends.filter(
+                (friend) => friend.accepted == false && !friend.unfriended
+            )
     );
     console.log("const friends:", friends);
     console.log("const wannabes:", wannabes);
@@ -41,7 +43,11 @@ export default function Friends() {
                             <img src={elem.imageurl} />
                             {elem.first}
                             {elem.last}
-                            <p onClick={(e) => unfriend(`${elem.id}`)}>
+                            <p
+                                onClick={(e) =>
+                                    dispatch(unfriend(`${elem.id}`))
+                                }
+                            >
                                 Remove from friends
                             </p>
                         </div>
@@ -59,7 +65,7 @@ export default function Friends() {
                             {elem.last}
                             <p
                                 onClick={(e) =>
-                                    acceptFriendRequest(`${elem.id}`)
+                                    dispatch(acceptFriendRequest(`${elem.id}`))
                                 }
                             >
                                 Accept friend request

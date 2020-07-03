@@ -10,7 +10,7 @@ export default function reducer(state = {}, action) {
         state = {
             ...state,
             friends: state.friends.map((friend) => {
-                if ((friend.id = action.id)) {
+                if (friend.id != action.id) {
                     return friend;
                 } else {
                     return {
@@ -32,11 +32,12 @@ export default function reducer(state = {}, action) {
                     return {
                         ...friend,
                         accepted: false,
+                        unfriended: true,
                     };
                 }
             }),
         };
     }
-    console.log("reducer: state.friends:", state);
+    console.log("state after unfriended:", state);
     return state;
 }
