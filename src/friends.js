@@ -1,32 +1,73 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "./axios";
-import { receiveFriendsWannabes } from "./actions";
+
+import {
+    receiveFriendsWannabes,
+    acceptFriendRequest,
+    unfriend,
+} from "./actions";
 
 export default function Friends() {
     const dispatch = useDispatch();
     const friends = useSelector(
-        // (state) => state.friends && state.users.filter((user) => user.hot == null) ///friends
-        (state) => state.friends
+        (state) =>
+            state.friends &&
+            state.friends.filter((friend) => friend.accepted == true)
+    );
+    const wannabes = useSelector(
+        (state) =>
+            state.friends &&
+            state.friends.filter((friend) => friend.accepted == false)
     );
     console.log("const friends:", friends);
+    console.log("const wannabes:", wannabes);
 
     useEffect(() => {
         dispatch(receiveFriendsWannabes());
     }, []);
 
+    if (!friends) {
+        return null;
+    }
+
     return (
         <div>
-            {friends.map((elem, idx) => {
-                return (
-                    <div key={idx}>
-                        <img src={elem.imageurl} />
-                        {elem.first}
-                        {elem.last}
-                    </div>
-                );
-            })}
+            <div>
+                <h1>Your friends:</h1>
+                {!friends.length && <p>you have no friends :(</p>}
+                {friends.map((elem, idx) => {
+                    return (
+                        <div key={idx}>
+                            <img src={elem.imageurl} />
+                            {elem.first}
+                            {elem.last}
+                            <p onClick={(e) => unfriend(`${elem.id}`)}>
+                                Remove from friends
+                            </p>
+                        </div>
+                    );
+                })}
+            </div>
+            <div>
+                <h1> Friend requests: </h1>
+                {!wannabes.length && <p>you have no friend requests</p>}
+                {wannabes.map((elem, idx) => {
+                    return (
+                        <div key={idx}>
+                            <img src={elem.imageurl} />
+                            {elem.first}
+                            {elem.last}
+                            <p
+                                onClick={(e) =>
+                                    acceptFriendRequest(`${elem.id}`)
+                                }
+                            >
+                                Accept friend request
+                            </p>
+                        </div>
+                    );
+                })}
+            </div>
         </div>
     );
 }
