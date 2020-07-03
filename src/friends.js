@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import {
     receiveFriendsWannabes,
@@ -8,6 +9,7 @@ import {
 } from "./actions";
 
 export default function Friends() {
+    const history = useHistory();
     const dispatch = useDispatch();
     const friends = useSelector(
         (state) =>
@@ -32,6 +34,11 @@ export default function Friends() {
         return null;
     }
 
+    const routeChange = (id) => {
+        let path = `/user/${id}`;
+        history.push(path);
+    };
+
     return (
         <div>
             <div>
@@ -40,7 +47,11 @@ export default function Friends() {
                 {friends.map((elem, idx) => {
                     return (
                         <div key={idx}>
-                            <img src={elem.imageurl} />
+                            <img
+                                onClick={(e) => routeChange(`${elem.id}`)}
+                                src={elem.imageurl}
+                            />
+
                             {elem.first}
                             {elem.last}
                             <p
@@ -60,7 +71,11 @@ export default function Friends() {
                 {wannabes.map((elem, idx) => {
                     return (
                         <div key={idx}>
-                            <img src={elem.imageurl} />
+                            <img
+                                src={elem.imageurl}
+                                onClick={(e) => routeChange(`${elem.id}`)}
+                            />
+
                             {elem.first}
                             {elem.last}
                             <p

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "./axios";
+import { useHistory } from "react-router-dom";
 
 export default function FindPeople() {
+    const history = useHistory();
     const [person, setPerson] = useState("");
     const [persons, setPersons] = useState([]);
     const [personListVisibility, setPersonListVisibility] = useState(true);
@@ -28,6 +30,11 @@ export default function FindPeople() {
         setPerson(e.target.value);
     };
 
+    const routeChange = (id) => {
+        let path = `/user/${id}`;
+        history.push(path);
+    };
+
     return (
         <div>
             <h1>Find people</h1>
@@ -39,7 +46,10 @@ export default function FindPeople() {
             {persons.map((elem, idx) => {
                 return (
                     <div key={idx}>
-                        <img src={elem.imageurl} />
+                        <img
+                            src={elem.imageurl}
+                            onClick={(e) => routeChange(`${elem.id}`)}
+                        />
                         {elem.first}
                         {elem.last}
                     </div>
