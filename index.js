@@ -450,39 +450,27 @@ io.on("connection", async (socket) => {
 
     const userID = socket.request.session.userID;
 
-    // if user makes it to this point in the code, then it means they're logged in
-    // & are successfully connected to sockets
-
-    // this is a good place to go get the last 10 chat messages
-    // we'll need to make a new table for chats
-    // your db query for getting the last 10 messages will need to be a JOIN
-    // you'll need info from both the users table and chats!
-    // i.e. user's first name, last name, image, and chat msg
-    //the most recent chat message should be displayed at the BOTTOM
     try {
         let data = await db.getLastTenMsgs();
         console.log("db.getLastTenMessages()", db.getLastTenMsgs());
         console.log("data from getLastTenMsgs:", data.rows);
-        io.socket.emit("chatMessages", data.rows);
-    } catch (err) {
+        io.sockets.emit("chatMessages", data.rows);
+    } catch {
         console.log("error in getLastTenMsgs");
     }
 
-    // ADDING A NEW MSG - let's listen for a new chat msg being sent from the client
+    // ADDING A NEW MSG
     socket.on("newMessage", async (newMsg) => {
-        console.log("This message is coming from chat.js component", newMsg);
+        console.log("This message is coming from chat.js component:", newMsg);
         console.log("user who sent newMsg is: ", userID);
-        db.addNewMsg(newMsg).then((newMsg) => {
-            io.sockets.emit("chatMessage", newMsg);
+        db.addNewMsg(userID, newMsg).then((data) => {
+            console.log("new message from db:", data.rows[0].id);
+            db.getNewMsg(data.rows[0].id).then((data) => {
+                console.log("data from getNewMsg:", data.rows[0]);
+                io.sockets.emit("chatMessage", data.rows[0]);
+            });
         });
-        // do a db query to store the new chat message into the chat table!!
-        // also do a db query to get info about the user (first name, last name, img) - will probably need to be a JOIN
-        // once you have your chat object, you'll want to EMIT it to EVERYONE so they can see it immediately.
-        io.sockets.emit("chatMessage", newMsg);
     });
-
-    // 1st argument ('My amazing chat message') - listens to the event that will be coming from chat.js
-    // 2nd argument (newMsg) - is the info that comes along with the emit from chat.js
 });
 
 server.listen(8080, () => {

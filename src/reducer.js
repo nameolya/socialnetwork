@@ -43,9 +43,17 @@ export default function reducer(state = {}, action) {
     if (action.type == "GET_MESSAGES") {
         state = {
             ...state,
-            messages: action.messages,
+            messages: action.msgs,
         };
     }
     console.log("state after GET_MESSAGES:", state);
+
+    if (action.type == "ADD_MESSAGE") {
+        state = {
+            ...state,
+            messages: [action.msg, ...state.messages],
+        };
+    }
+    console.log("state after ADD_MESSAGE:", state);
     return state;
 }

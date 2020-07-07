@@ -126,7 +126,7 @@ a {
 .other-profile {
     display: grid;
     grid-template-columns: 40px 50px 204px 50px auto 100px 100px 100px 40px;
-    grid-template-rows: 180px auto auto auto auto auto auto auto 10px;
+    grid-template-rows: 180px auto auto auto auto auto 100px auto 10px;
     height: 100vh;
     width: 100vw;
 }
@@ -172,7 +172,7 @@ a {
     overflow-y: scroll;
     grid-column-start: 5;
     grid-row-start: 3;
-    grid-row-end: 5;
+    grid-row-end: 7;
     border: solid black 2px;
     box-shadow: 2px 5px grey;
 }
@@ -186,11 +186,19 @@ a {
 
 .chat-textarea {
     grid-column-start: 5;
-    grid-row-start: 5;
+    grid-row-start: 7;
     border: grey solid 2px;
     align-self: center;
 }
 
+.chat-message-container {
+    display: flex;
+    border: black dotted;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* FIND PEOPLE */
 .find-people-input {
     border-bottom: solid grey 2px;
     font-size: 150%;
@@ -253,7 +261,13 @@ a {
     height: 200px;
 }
 
-.edit-bio-p {
+.edit-bio-p,
+.chat-message-text {
     font-style: bold;
     font-size: 150%;
+}
+
+.chat-message-timestamp {
+    font-style: italic;
+    font-size: 80%;
 }

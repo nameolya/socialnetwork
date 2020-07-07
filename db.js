@@ -125,6 +125,20 @@ module.exports.getFriendsById = (user) => {
 
 module.exports.getLastTenMsgs = () => {
     return db.query(
-        `SELECT users.id, first, last, imageUrl, text FROM users INNER JOIN chats ON users.id=chats.poster_id ORDER BY chats.created_at DESC LIMIT 10;`
+        `SELECT users.id, first, last, imageUrl, chats.created_at, text FROM users INNER JOIN chats ON users.id=chats.poster_id ORDER BY chats.created_at DESC LIMIT 10;`
+    );
+};
+
+module.exports.addNewMsg = (id, message) => {
+    return db.query(
+        `INSERT INTO chats (poster_id, text) VALUES ($1, $2) RETURNING id;`,
+        [id, message]
+    );
+};
+
+module.exports.getNewMsg = (id) => {
+    return db.query(
+        `SELECT users.id, first, last, imageUrl, chats.created_at, text FROM users INNER JOIN chats ON users.id=chats.poster_id WHERE chats.id=$1;`,
+        [id]
     );
 };

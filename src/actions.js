@@ -25,9 +25,16 @@ export async function unfriend(id) {
     };
 }
 
-export function chatMessages(messages) {
+export function chatMessages(msgs) {
     return {
         type: "GET_MESSAGES",
-        messages,
+        msgs,
+    };
+}
+
+export function chatMessage(msg) {
+    return {
+        type: "ADD_MESSAGE",
+        msg,
     };
 }

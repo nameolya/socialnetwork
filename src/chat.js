@@ -1,14 +1,17 @@
 import React, { useEffect, useRef } from "react";
 import { socket } from "./socket";
 import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import moment from "moment";
 
 export default function Chat() {
+    const history = useHistory();
     const elemRef = useRef();
     const chatMessages = useSelector((state) => state && state.messages);
 
     console.log("here are my last 10 chat messages: ", chatMessages);
 
-    // you'll want to run this everytime we get a newChatMsg - you need to pass something to the array
+    //making scrollbar positioned at the bottom:
     useEffect(() => {
         elemRef.current.scrollTop =
             elemRef.current.scrollHeight - elemRef.current.clientHeight;
@@ -22,6 +25,11 @@ export default function Chat() {
         }
     };
 
+    const routeChange = (id) => {
+        let path = `/user/${id}`;
+        history.push(path);
+    };
+
     return (
         <div className="chat">
             <div className="chat-title">
@@ -29,26 +37,40 @@ export default function Chat() {
             </div>
             <div className="chat-messages-container" ref={elemRef}>
                 {chatMessages &&
-                    chatMessages.map((elem, idx) => {
-                        return (
-                            <div key={idx}>
-                                <div>
-                                    <div className="profile-image">
-                                        <img
-                                            className="small"
-                                            src={elem.imageurl}
-                                            onClick={(e) =>
-                                                routeChange(`${elem.id}`)
-                                            }
-                                        />
+                    chatMessages
+                        .slice(0)
+                        .reverse()
+                        .map((elem, idx) => {
+                            const date = moment(`${elem.created_at}`).fromNow();
+                            return (
+                                <div key={idx}>
+                                    <div className="chat-message-container">
+                                        <div>
+                                            <div className="profile-image">
+                                                <img
+                                                    className="small"
+                                                    src={elem.imageurl}
+                                                    onClick={(e) =>
+                                                        routeChange(
+                                                            `${elem.id}`
+                                                        )
+                                                    }
+                                                />
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p className="chat-message-text">
+                                                {elem.first} {elem.last}:{" "}
+                                                {elem.text}
+                                            </p>
+                                            <p className="chat-message-timestamp">
+                                                ({date})
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                                //messages here
-                                {elem.first}
-                                {elem.last}
-                            </div>
-                        );
-                    })}
+                            );
+                        })}
             </div>
             <div className="chat-textarea">
                 <textarea
