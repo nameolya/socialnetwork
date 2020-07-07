@@ -125,7 +125,6 @@ module.exports.getFriendsById = (user) => {
 
 module.exports.getLastTenMsgs = () => {
     return db.query(
-        `SELECT users.id, first, last, imageUrl, text FROM users INNER JOIN chats ON users.id=chats.poster_id ORDER BY chats.created_at DESC LIMIT 10;`,
-        []
+        `SELECT users.id, first, last, imageUrl, text FROM users INNER JOIN chats ON users.id=chats.poster_id ORDER BY chats.created_at DESC LIMIT 10;`
     );
 };

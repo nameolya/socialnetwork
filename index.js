@@ -439,7 +439,7 @@ app.get("*", (req, res) => {
     }
 });
 
-io.on("connection", function (socket) {
+io.on("connection", async (socket) => {
     console.log(`YAAAAAAYYYYY!!!!socket id ${socket.id} is now connected`);
 
     // we don't want logged out users to use sockets!
@@ -459,14 +459,17 @@ io.on("connection", function (socket) {
     // you'll need info from both the users table and chats!
     // i.e. user's first name, last name, image, and chat msg
     //the most recent chat message should be displayed at the BOTTOM
-
-    db.getLastTenMsgs().then((data) => {
-        console.log("data from getLastTenMsgs:", data.rows);
-        io.socket.emit("chatMessages", data.rows);
-    });
+    // try {
+    let data = await db.getLastTenMessages();
+    console.log("db.getLastTenMessages()", db.getLastTenMessages());
+    console.log("data from getLastTenMsgs:", data);
+    // io.socket.emit("chatMessages", data.rows);
+    // } catch (err) {
+    //     console.log("error in getLastTenMsgs");
+    // }
 
     // ADDING A NEW MSG - let's listen for a new chat msg being sent from the client
-    socket.on("newMessage", (newMsg) => {
+    socket.on("newMessage", async (newMsg) => {
         console.log("This message is coming from chat.js component", newMsg);
         console.log("user who sent newMsg is: ", userID);
         db.addNewMsg(newMsg).then((newMsg) => {

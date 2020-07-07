@@ -252,3 +252,8 @@ a {
     justify-content: space-between;
     height: 200px;
 }
+
+.edit-bio-p {
+    font-style: bold;
+    font-size: 150%;
+}

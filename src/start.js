@@ -16,9 +16,9 @@ const store = createStore(
 
 let component;
 if (location.pathname === "/welcome") {
-    init(store);
     component = <Welcome />;
 } else {
+    init(store);
     component = (
         <Provider store={store}>
             <App />
