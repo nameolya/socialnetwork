@@ -125,7 +125,7 @@ a {
 .user-profile,
 .other-profile {
     display: grid;
-    grid-template-columns: 40px 0px 100px 204px auto 100px 100px 100px 40px;
+    grid-template-columns: 40px 50px 204px 50px auto 100px 100px 100px 40px;
     grid-template-rows: 180px auto auto auto auto auto auto auto 10px;
     height: 100vh;
     width: 100vw;
@@ -200,7 +200,7 @@ a {
 }
 /* PROFILE */
 .x-profilepic {
-    grid-column-start: 4;
+    grid-column-start: 3;
     grid-row-start: 3;
     border: grey solid 2px;
     align-self: center;
@@ -216,7 +216,7 @@ a {
 
 /* USER PROFILE */
 .other-profile-pic-container {
-    grid-column-start: 4;
+    grid-column-start: 3;
     grid-row-start: 3;
     border: grey solid 2px;
     align-self: center;
@@ -228,4 +228,27 @@ a {
 
 .other-profile-pic {
     width: 100%;
+}
+
+.bio-container {
+    grid-column-start: 5;
+    grid-row-start: 3;
+    text-align: center;
+    height: 250px;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.bio-editor-textarea {
+    border: solid grey 2px;
+    font-size: 150%;
+}
+
+.bio-editor {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 200px;
 }

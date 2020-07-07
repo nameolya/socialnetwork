@@ -44,20 +44,19 @@ class BioEditor extends Component {
     getCurrentDisplay() {
         if (this.state.bioEditorIsVisible) {
             return (
-                <div>
-                    <h1>Edit your bio:</h1>
-                    <form>
-                        <textarea
-                            name="draftbio"
-                            rows="4"
-                            cols="50"
-                            required
-                            onChange={(e) => this.handleChange(e)}
-                        >
-                            {this.state.draftbio}
-                        </textarea>
-                        <button onClick={(e) => this.submitBio(e)}>Save</button>
-                    </form>
+                <div className="bio-editor">
+                    <h2>Edit your bio:</h2>
+                    <textarea
+                        className="bio-editor-textarea"
+                        name="draftbio"
+                        rows="3"
+                        cols="50"
+                        required
+                        onChange={(e) => this.handleChange(e)}
+                    >
+                        {this.state.draftbio}
+                    </textarea>
+                    <p onClick={(e) => this.submitBio(e)}>Save</p>
                     <p
                         onClick={() =>
                             this.setState({
@@ -65,7 +64,7 @@ class BioEditor extends Component {
                             })
                         }
                     >
-                        x
+                        Go back
                     </p>
                 </div>
             );
@@ -89,7 +88,7 @@ class BioEditor extends Component {
             return (
                 <div>
                     <p
-                        className="addeditbio"
+                        className="addbio"
                         onClick={() =>
                             this.setState({
                                 bioEditorIsVisible: true,

@@ -28,26 +28,27 @@ export default function Chat() {
                 <h1>Welcome to Chat</h1>
             </div>
             <div className="chat-messages-container" ref={elemRef}>
-                {chatMessages.map((elem, idx) => {
-                    return (
-                        <div key={idx}>
-                            <div>
-                                <div className="profile-image">
-                                    <img
-                                        className="small"
-                                        src={elem.imageurl}
-                                        onClick={(e) =>
-                                            routeChange(`${elem.id}`)
-                                        }
-                                    />
+                {chatMessages &&
+                    chatMessages.map((elem, idx) => {
+                        return (
+                            <div key={idx}>
+                                <div>
+                                    <div className="profile-image">
+                                        <img
+                                            className="small"
+                                            src={elem.imageurl}
+                                            onClick={(e) =>
+                                                routeChange(`${elem.id}`)
+                                            }
+                                        />
+                                    </div>
                                 </div>
+                                //messages here
+                                {elem.first}
+                                {elem.last}
                             </div>
-                            //messages here
-                            {elem.first}
-                            {elem.last}
-                        </div>
-                    );
-                })}
+                        );
+                    })}
             </div>
             <div className="chat-textarea">
                 <textarea

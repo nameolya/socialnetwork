@@ -462,7 +462,7 @@ io.on("connection", function (socket) {
 
     db.getLastTenMsgs().then((data) => {
         console.log("data from getLastTenMsgs:", data.rows);
-        io.sockets.emit("chatMessages", data.rows);
+        io.socket.emit("chatMessages", data.rows);
     });
 
     // ADDING A NEW MSG - let's listen for a new chat msg being sent from the client
