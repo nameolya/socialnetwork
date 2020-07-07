@@ -36,25 +36,47 @@ export default function FindPeople() {
     };
 
     return (
-        <div>
-            <h1>Find people</h1>
-            {personListVisibility && <p>Recently joined:</p>}
-            <input
-                onChange={handleChange}
-                placeholder="who are you looking for?"
-            ></input>
-            {persons.map((elem, idx) => {
-                return (
-                    <div key={idx}>
-                        <img
-                            src={elem.imageurl}
-                            onClick={(e) => routeChange(`${elem.id}`)}
-                        />
-                        {elem.first}
-                        {elem.last}
-                    </div>
-                );
-            })}
+        <div className="find-people">
+            <div className="people-search">
+                <div>
+                    <h1>Find people</h1>
+                </div>
+                <div>
+                    <input
+                        className="find-people-input"
+                        onChange={handleChange}
+                        placeholder="who are you looking for:"
+                    ></input>
+                </div>
+                <div>
+                    {personListVisibility && <h2>Recently joined:</h2>}
+                    {persons.length == 0 && (
+                        <p className="error">No match found</p>
+                    )}
+                </div>
+            </div>
+
+            <div className="profile-box">
+                {persons.map((elem, idx) => {
+                    return (
+                        <div key={idx}>
+                            <div>
+                                <div className="profile-image">
+                                    <img
+                                        className="small"
+                                        src={elem.imageurl}
+                                        onClick={(e) =>
+                                            routeChange(`${elem.id}`)
+                                        }
+                                    />
+                                </div>
+                            </div>
+                            {elem.first}
+                            {elem.last}
+                        </div>
+                    );
+                })}
+            </div>
         </div>
     );
 }

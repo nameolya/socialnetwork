@@ -39,7 +39,7 @@ class Registration extends Component {
 
     render() {
         return (
-            <div>
+            <div className="registration">
                 <h1>Registration component:</h1>
                 {this.state.error && (
                     <div> Something went wrong, please try again! </div>

@@ -1,7 +1,9 @@
 const express = require("express");
 const app = express();
+const server = require("http").Server(app);
+const io = require("socket.io")(server, { origins: "localhost:8080" });
 const compression = require("compression");
-const cookieSession = require("cookie-session");
+// const cookieSession = require("cookie-session");
 const db = require("./db");
 const { hash, compare } = require("./bc");
 const csurf = require("csurf");
@@ -19,13 +21,26 @@ if (process.env.PORT) {
 } else {
     secret = require("./secrets").secret;
 }
+///---cookie session---
+// app.use(
+//     cookieSession({
+//         secret: secret,
+//         maxAge: 1000 * 60 * 60 * 24 * 14,
+//     })
+// );
 
-app.use(
-    cookieSession({
-        secret: secret,
-        maxAge: 1000 * 60 * 60 * 24 * 14,
-    })
-);
+const cookieSession = require("cookie-session");
+const cookieSessionMiddleware = cookieSession({
+    secret: `I'm always angry.`,
+    maxAge: 1000 * 60 * 60 * 24 * 90,
+});
+
+app.use(cookieSessionMiddleware);
+io.use(function (socket, next) {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
+
+///-------
 
 app.use(express.static("public"));
 
@@ -424,6 +439,49 @@ app.get("*", (req, res) => {
     }
 });
 
-app.listen(8080, () => {
+io.on("connection", function (socket) {
+    console.log(`YAAAAAAYYYYY!!!!socket id ${socket.id} is now connected`);
+
+    // we don't want logged out users to use sockets!
+    if (!socket.request.session.userID) {
+        console.log(`socket with the id ${socket.id} is now disconnected`);
+        return socket.disconnect(true);
+    }
+
+    const userID = socket.request.session.userID;
+
+    // if user makes it to this point in the code, then it means they're logged in
+    // & are successfully connected to sockets
+
+    // this is a good place to go get the last 10 chat messages
+    // we'll need to make a new table for chats
+    // your db query for getting the last 10 messages will need to be a JOIN
+    // you'll need info from both the users table and chats!
+    // i.e. user's first name, last name, image, and chat msg
+    //the most recent chat message should be displayed at the BOTTOM
+
+    db.getLastTenMsgs().then((data) => {
+        console.log("data from getLastTenMsgs:", data.rows);
+        io.sockets.emit("chatMessages", data.rows);
+    });
+
+    // ADDING A NEW MSG - let's listen for a new chat msg being sent from the client
+    socket.on("newMessage", (newMsg) => {
+        console.log("This message is coming from chat.js component", newMsg);
+        console.log("user who sent newMsg is: ", userID);
+        db.addNewMsg(newMsg).then((newMsg) => {
+            io.sockets.emit("chatMessage", newMsg);
+        });
+        // do a db query to store the new chat message into the chat table!!
+        // also do a db query to get info about the user (first name, last name, img) - will probably need to be a JOIN
+        // once you have your chat object, you'll want to EMIT it to EVERYONE so they can see it immediately.
+        io.sockets.emit("chatMessage", newMsg);
+    });
+
+    // 1st argument ('My amazing chat message') - listens to the event that will be coming from chat.js
+    // 2nd argument (newMsg) - is the info that comes along with the emit from chat.js
+});
+
+server.listen(8080, () => {
     console.log("I'm listening.");
 });

@@ -1,10 +1,63 @@
-body {
-    background: rgb(255, 255, 220);
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    border: 0;
+    box-sizing: border-box;
 }
+*:focus {
+    outline: 0;
+}
+html,
+body,
+#root {
+    height: 100%;
+}
+body {
+    -webkit-font-smoothing: antialiased;
+}
+body,
+input,
+button {
+    font: 14px "Roboto", sans-serif;
+}
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+button {
+    cursor: pointer;
+}
+
+.main {
+    display: inline-grid;
+    grid-template-columns: 40px 50px auto 50px 40px;
+    grid-template-rows: 200px 250px auto;
+}
+
+body {
+    background: whitesmoke;
+}
+
+/* HEADER */
 
 .header {
     display: flex;
     justify-content: space-between;
+    background: black;
+    opacity: 0.85;
+    height: 160px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1;
+}
+
+.header:hover {
+    opacity: 1;
 }
 
 .user-profile {
@@ -12,9 +65,167 @@ body {
 }
 
 .small {
-    height: 80px;
+    width: 100%;
+    height: auto;
+}
+
+.header-menu {
+    display: flex;
+    justify-content: space-between;
+    font-style: bold;
+    font-size: 120%;
+}
+
+.main-header {
+    text-align: center;
+    color: white;
+    margin: 20px;
+}
+.logo {
+    width: 100px;
+}
+.logo-container {
+    margin: 20px 20px 20px 60px;
+}
+a {
+    color: white;
+}
+
+.profile-image {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin: 20px 60px 20px 20px;
+}
+
+.profile-image:hover {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+    transition: 1s;
+}
+
+/* PICTURE UPLOADER */
+.uploader {
+    position: fixed;
+    background: black;
+    top: 170px;
+    left: 200px;
+    right: 200px;
+    bottom: 100px;
+    color: white;
+}
+
+/* FIND PEOPLE */
+.find-people,
+.friends,
+.chat,
+.user-profile,
+.other-profile {
+    display: grid;
+    grid-template-columns: 40px 0px 100px 204px auto 100px 100px 100px 40px;
+    grid-template-rows: 180px auto auto auto auto auto auto auto 10px;
+    height: 100vh;
+    width: 100vw;
+}
+
+.profile-box,
+.friends-box {
+    grid-column-start: 3;
+    grid-row-start: 5;
+    display: flex;
+}
+
+.wannabes-box {
+    grid-column-start: 3;
+    grid-row-start: 5;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+}
+.people-search,
+.friends-title {
+    grid-column-start: 5;
+    grid-row-start: 2;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
+    display: flex;
+    height: 200px;
+}
+
+.wannabes-title {
+    grid-column-start: 3;
+    grid-row-start: 4;
+}
+
+.registration {
+    background: black;
+    color: white;
+}
+
+/* CHAT */
+
+.chat-messages-container {
+    text-align: center;
+    overflow-y: scroll;
+    grid-column-start: 5;
+    grid-row-start: 3;
+    grid-row-end: 5;
+    border: solid black 2px;
+    box-shadow: 2px 5px grey;
+}
+
+.chat-title {
+    grid-column-start: 5;
+    grid-row-start: 2;
+    text-align: center;
+    align-self: center;
+}
+
+.chat-textarea {
+    grid-column-start: 5;
+    grid-row-start: 5;
+    border: grey solid 2px;
+    align-self: center;
+}
+
+.find-people-input {
+    border-bottom: solid grey 2px;
+    font-size: 150%;
+}
+.error {
+    color: tomato;
+}
+/* PROFILE */
+.x-profilepic {
+    grid-column-start: 4;
+    grid-row-start: 3;
+    border: grey solid 2px;
+    align-self: center;
+    position: relative;
+    width: 250px;
+    height: 250px;
+    overflow: hidden;
 }
 
 .large {
-    height: 200px;
+    width: 100%;
+}
+
+/* USER PROFILE */
+.other-profile-pic-container {
+    grid-column-start: 4;
+    grid-row-start: 3;
+    border: grey solid 2px;
+    align-self: center;
+    position: relative;
+    width: 250px;
+    height: 250px;
+    overflow: hidden;
+}
+
+.other-profile-pic {
+    width: 100%;
 }

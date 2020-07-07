@@ -39,5 +39,13 @@ export default function reducer(state = {}, action) {
         };
     }
     console.log("state after unfriended:", state);
+
+    if (action.type == "GET_MESSAGES") {
+        state = {
+            ...state,
+            messages: action.messages,
+        };
+    }
+    console.log("state after GET_MESSAGES:", state);
     return state;
 }

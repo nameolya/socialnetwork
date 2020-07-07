@@ -66,12 +66,12 @@ module.exports.addUserBio = (bio, id) => {
 };
 
 module.exports.getLatestUsers = () => {
-    return db.query(`SELECT * FROM users ORDER BY id DESC LIMIT 3;`);
+    return db.query(`SELECT * FROM users ORDER BY id DESC LIMIT 6;`);
 };
 
 module.exports.getUserByName = (name) => {
     return db.query(
-        `SELECT first, last, bio, imageUrl FROM users WHERE first ILIKE $1 OR last ILIKE $1 LIMIT 3;`,
+        `SELECT id, first, last, bio, imageUrl FROM users WHERE first ILIKE $1 OR last ILIKE $1 LIMIT 6;`,
         [name + "%"]
     );
 };
@@ -120,5 +120,12 @@ module.exports.getFriendsById = (user) => {
   OR (accepted = true AND receiver_id = $1 AND sender_id = users.id)
   OR (accepted = true AND sender_id = $1 AND receiver_id = users.id)`,
         [user]
+    );
+};
+
+module.exports.getLastTenMsgs = () => {
+    return db.query(
+        `SELECT users.id, first, last, imageUrl, text FROM users INNER JOIN chats ON users.id=chats.poster_id ORDER BY chats.created_at DESC LIMIT 10;`,
+        [city]
     );
 };

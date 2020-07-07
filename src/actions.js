@@ -24,3 +24,10 @@ export async function unfriend(id) {
         id,
     };
 }
+
+export function getMessages(messages) {
+    return {
+        type: "GET_MESSAGES",
+        messages,
+    };
+}

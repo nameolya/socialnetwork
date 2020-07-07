@@ -30,7 +30,7 @@ export default class Uploader extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="uploader">
                 <h2 className="uploader-text">Want to change your image?</h2>
                 <input
                     type="file"

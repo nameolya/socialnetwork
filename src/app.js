@@ -9,6 +9,7 @@ import FindPeople from "./findpeople";
 import Friends from "./friends";
 import { BrowserRouter, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Chat from "./chat";
 
 export default class App extends React.Component {
     constructor() {
@@ -56,20 +57,34 @@ export default class App extends React.Component {
     render() {
         return (
             <BrowserRouter>
-                <div>
+                <div className="main">
                     <div className="header">
-                        <Logo />
-                        <Link to="/">Home</Link>
-                        <Link to="/users">Find People</Link>
-                        <Link to="/friends">Friends</Link>
-                        <ProfilePic
-                            first={this.state.first}
-                            last={this.state.last}
-                            imageUrl={this.state.imageUrl}
-                            imageSize="small"
-                            toggleModal={() => this.toggleModal()}
-                        />
+                        <div className="logo-container">
+                            <Logo />
+                        </div>
+                        <div>
+                            <h1 className="main-header">CITRUS</h1>
+                            <h1 className="main-header">
+                                Healthy food community
+                            </h1>
+                            <div className="header-menu">
+                                <Link to="/">Home</Link>
+                                <Link to="/users">Find People</Link>
+                                <Link to="/friends">Friends</Link>
+                                <Link to="/chat">Chat</Link>
+                            </div>
+                        </div>
+                        <div className="profile-image">
+                            <ProfilePic
+                                first={this.state.first}
+                                last={this.state.last}
+                                imageUrl={this.state.imageUrl}
+                                imageSize="small"
+                                toggleModal={() => this.toggleModal()}
+                            />
+                        </div>
                     </div>
+
                     <Route
                         exact
                         path="/"
@@ -96,9 +111,11 @@ export default class App extends React.Component {
                         )}
                     />
 
-                    <Route path="/users" render={() => <FindPeople />} />
+                    <Route path="/users" component={FindPeople} />
 
-                    <Route path="/friends" render={() => <Friends />} />
+                    <Route path="/friends" component={Friends} />
+
+                    <Route path="/chat" component={Chat} />
 
                     {this.state.uploaderIsVisible && (
                         <Uploader

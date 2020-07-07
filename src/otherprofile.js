@@ -24,8 +24,13 @@ export default class OtherProfile extends React.Component {
     }
     render() {
         return (
-            <div>
-                <img src={this.state.imageUrl} />
+            <div className="other-profile">
+                <div className="other-profile-pic-container">
+                    <img
+                        className="other-profile-pic"
+                        src={this.state.imageUrl}
+                    />
+                </div>
                 <h1>
                     {this.state.first}
                     {this.state.last}

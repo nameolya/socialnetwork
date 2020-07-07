@@ -40,41 +40,53 @@ export default function Friends() {
     };
 
     return (
-        <div>
-            <div>
+        <div className="friends">
+            <div className="friends-title">
                 <h1>Your friends:</h1>
                 {!friends.length && <p>you have no friends :(</p>}
+            </div>
+            <div className="friends-box">
                 {friends.map((elem, idx) => {
                     return (
                         <div key={idx}>
-                            <img
-                                onClick={(e) => routeChange(`${elem.id}`)}
-                                src={elem.imageurl}
-                            />
-
-                            {elem.first}
-                            {elem.last}
-                            <p
-                                onClick={(e) =>
-                                    dispatch(unfriend(`${elem.id}`))
-                                }
-                            >
-                                Remove from friends
-                            </p>
+                            <div className="profile-image">
+                                <img
+                                    className="small"
+                                    onClick={(e) => routeChange(`${elem.id}`)}
+                                    src={elem.imageurl}
+                                />
+                            </div>
+                            <div>
+                                {elem.first}
+                                {elem.last}
+                                <p
+                                    onClick={(e) =>
+                                        dispatch(unfriend(`${elem.id}`))
+                                    }
+                                >
+                                    Remove from friends
+                                </p>
+                            </div>
                         </div>
                     );
                 })}
             </div>
-            <div>
+
+            <div className="wannabes-title">
                 <h1> Friend requests: </h1>
                 {!wannabes.length && <p>you have no friend requests</p>}
+            </div>
+            <div className="wannabes-box">
                 {wannabes.map((elem, idx) => {
                     return (
                         <div key={idx}>
-                            <img
-                                src={elem.imageurl}
-                                onClick={(e) => routeChange(`${elem.id}`)}
-                            />
+                            <div className="profile-image">
+                                <img
+                                    className="small"
+                                    src={elem.imageurl}
+                                    onClick={(e) => routeChange(`${elem.id}`)}
+                                />
+                            </div>
 
                             {elem.first}
                             {elem.last}
