@@ -64,62 +64,80 @@ class Reset extends Component {
 
         if (step == 1) {
             return (
-                <div>
-                    <h1>Password reset</h1>
+                <div className="reset">
+                    <h1 className="welcome-component-header">Password reset</h1>
+                    <input
+                        className="welcome-input"
+                        name="email"
+                        placeholder="email"
+                        type="email"
+                        onChange={(e) => this.handleChange(e)}
+                    />
+                    <button
+                        className="welcome-button"
+                        onClick={(e) => this.submitEmail(e)}
+                    >
+                        Submit
+                    </button>
                     {this.state.error && (
-                        <div> Something went wrong, please try again! </div>
+                        <div className="error">
+                            {" "}
+                            Something went wrong, please try again!{" "}
+                        </div>
                     )}
-                    <form>
-                        <input
-                            name="email"
-                            placeholder="email"
-                            type="email"
-                            onChange={(e) => this.handleChange(e)}
-                        />
-                        <button onClick={(e) => this.submitEmail(e)}>
-                            Submit
-                        </button>
-                    </form>
                 </div>
             );
         } else if (step == 2) {
             return (
-                <div>
-                    <h1>Password reset</h1>
-                    {this.state.error && (
-                        <div> Something went wrong, please try again! </div>
-                    )}
-                    <p>
+                <div className="reset">
+                    <h1 className="welcome-component-header">Password reset</h1>
+
+                    <p className="welcome-p">
                         We sent you a secret code on your email. The code is
                         valid 10 minutes. Please enter the code:
                     </p>
-                    <form>
-                        <input
-                            name="code"
-                            placeholder="secret code"
-                            onChange={(e) => this.handleChange(e)}
-                        />
-                        <input
-                            name="password"
-                            placeholder="new password"
-                            type="password"
-                            onChange={(e) => this.handleChange(e)}
-                        />
-                        <button onClick={(e) => this.submitCodeAndPassword(e)}>
-                            Submit
-                        </button>
-                    </form>
+
+                    <input
+                        className="welcome-input"
+                        name="code"
+                        placeholder="secret code"
+                        onChange={(e) => this.handleChange(e)}
+                    />
+                    <input
+                        className="welcome-input"
+                        name="password"
+                        placeholder="new password"
+                        type="password"
+                        onChange={(e) => this.handleChange(e)}
+                    />
+                    <button
+                        className="welcome-button"
+                        onClick={(e) => this.submitCodeAndPassword(e)}
+                    >
+                        Submit
+                    </button>
+                    {this.state.error && (
+                        <div className="error">
+                            Something went wrong, please try again!{" "}
+                        </div>
+                    )}
                 </div>
             );
         } else {
             return (
-                <div>
-                    <h1>Password reset</h1>
+                <div className="reset">
+                    <h1 className="welcome-component-header">Password reset</h1>
                     {this.state.error && (
-                        <div> Something went wrong, please try again! </div>
+                        <div className="error">
+                            Something went wrong, please try again!{" "}
+                        </div>
                     )}
-                    <p>Your password was successfully changed.</p>
-                    <Link to="/login">Log in</Link>
+                    <p className="welcome-p">
+                        Your password was successfully changed.
+                    </p>
+                    <Link className="welcome-link" to="/login">
+                        Log in
+                    </Link>
                 </div>
             );
         }

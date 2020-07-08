@@ -48,16 +48,11 @@ body {
     display: flex;
     justify-content: space-between;
     background: black;
-    opacity: 0.85;
     height: 160px;
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1;
-}
-
-.header:hover {
-    opacity: 1;
 }
 
 .user-profile {
@@ -100,7 +95,8 @@ a {
     margin: 20px 60px 20px 20px;
 }
 
-.profile-image:hover {
+.profile-image:hover,
+.friend-profile-image:hover {
     -webkit-transform: scale(1.1);
     -ms-transform: scale(1.1);
     transform: scale(1.1);
@@ -111,11 +107,50 @@ a {
 .uploader {
     position: fixed;
     background: black;
-    top: 170px;
-    left: 200px;
-    right: 200px;
-    bottom: 100px;
+    top: 160px;
+    right: 40px;
+    width: 250px;
+    height: 200px;
+    color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.uploader-text {
+    text-align: center;
+}
+
+.inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
     color: white;
+    background-color: black;
+    display: inline-block;
+    border: solid 1px white;
+    border-radius: 10px;
+    height: 30px;
+    width: 160px;
+    text-align: center;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    background-color: white;
+    color: black;
+}
+
+.inputfile + label {
+    cursor: pointer;
 }
 
 /* FIND PEOPLE */
@@ -123,29 +158,22 @@ a {
 .friends,
 .chat,
 .user-profile,
-.other-profile {
+.other-profile,
+.welcome {
     display: grid;
     grid-template-columns: 40px 50px 204px 50px auto 100px 100px 100px 40px;
-    grid-template-rows: 180px auto auto auto auto auto 100px auto 10px;
+    grid-template-rows: 180px 70px auto auto auto auto 100px auto 10px;
     height: 100vh;
     width: 100vw;
 }
 
-.profile-box,
-.friends-box {
+.profile-box {
     grid-column-start: 3;
     grid-row-start: 5;
     display: flex;
 }
 
-.wannabes-box {
-    grid-column-start: 3;
-    grid-row-start: 5;
-    display: grid;
-    grid-template-columns: auto auto auto auto auto auto;
-}
-.people-search,
-.friends-title {
+.people-search {
     grid-column-start: 5;
     grid-row-start: 2;
     flex-direction: column;
@@ -155,16 +183,14 @@ a {
     height: 200px;
 }
 
-.wannabes-title {
-    grid-column-start: 3;
-    grid-row-start: 4;
+.find-profile-image {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin: 50px 40px 20px 40px;
 }
-
-.registration {
-    background: black;
-    color: white;
-}
-
 /* CHAT */
 
 .chat-messages-container {
@@ -184,7 +210,7 @@ a {
     align-self: center;
 }
 
-.chat-textarea {
+.chat-textarea-container {
     grid-column-start: 5;
     grid-row-start: 7;
     border: grey solid 2px;
@@ -193,11 +219,28 @@ a {
 
 .chat-message-container {
     display: flex;
-    border: black dotted;
     justify-content: flex-start;
     align-items: center;
 }
+.chat-message-text-container {
+    border: solid rgb(227, 197, 143) 1px;
+    border-radius: 10px;
+    background: lightyellow;
+    width: 400px;
+    overflow-wrap: break-word;
+}
 
+.chat-message-text {
+    font-style: bold;
+    font-size: 120%;
+    margin: 5px;
+}
+
+.chat-message-timestamp {
+    font-style: italic;
+    font-size: 80%;
+    margin: 5px;
+}
 /* FIND PEOPLE */
 .find-people-input {
     border-bottom: solid grey 2px;
@@ -205,6 +248,14 @@ a {
 }
 .error {
     color: tomato;
+}
+
+.find-people-container,
+.wannabe-container,
+.friend-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 /* PROFILE */
 .x-profilepic {
@@ -216,6 +267,7 @@ a {
     width: 250px;
     height: 250px;
     overflow: hidden;
+    box-shadow: 2px 5px grey;
 }
 
 .large {
@@ -232,13 +284,14 @@ a {
     width: 250px;
     height: 250px;
     overflow: hidden;
+    box-shadow: 2px 5px grey;
 }
 
 .other-profile-pic {
     width: 100%;
 }
-
-.bio-container {
+/* BIO */
+.profile-bio-container {
     grid-column-start: 5;
     grid-row-start: 3;
     text-align: center;
@@ -249,6 +302,16 @@ a {
     justify-content: space-between;
 }
 
+.bio-container {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* background: rgb(227, 224, 224); */
+    border: solid grey 2px;
+    box-shadow: 2px 5px grey;
+    margin-left: 30px;
+}
 .bio-editor-textarea {
     border: solid grey 2px;
     font-size: 150%;
@@ -261,13 +324,132 @@ a {
     height: 200px;
 }
 
-.edit-bio-p,
-.chat-message-text {
+.edit-bio-p {
     font-style: bold;
     font-size: 150%;
+    margin: 5px;
 }
 
-.chat-message-timestamp {
-    font-style: italic;
-    font-size: 80%;
+.bio-text {
+    font-style: bold;
+    font-size: 150%;
+    margin: 50px 20px 5px 20px;
+}
+/* FRIENDS */
+
+.friends-title {
+    grid-column-start: 5;
+    grid-row-start: 2;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
+    display: flex;
+}
+
+.wannabes-title {
+    grid-column-start: 5;
+    grid-row-start: 4;
+    flex-direction: column;
+    justify-content: space-evenly;
+    text-align: center;
+    display: flex;
+}
+
+.wannabes-box {
+    grid-column-start: 3;
+    grid-row-start: 5;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+}
+
+.friends-box {
+    grid-column-start: 3;
+    grid-row-start: 3;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+}
+
+.friend-profile-image {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin: 50px 45px 20px 40px;
+}
+
+.friends-p {
+    font-style: bold;
+    font-size: 150%;
+    margin: 5px;
+}
+
+.friends-button:hover {
+    background: black;
+    color: white;
+}
+/* REGISTRATION, LOGIN, RESET */
+
+.registration,
+.login,
+.reset {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.welcome-container {
+    grid-column-start: 5;
+    grid-row-start: 3;
+}
+
+.welcome-header {
+    grid-column-start: 5;
+    grid-row-start: 2;
+    text-align: center;
+}
+
+.welcome-component-header {
+    margin: 20px;
+}
+.welcome-input {
+    border-bottom: solid grey 2px;
+    font-style: bold;
+    font-size: 150%;
+    margin: 5px;
+    text-align: center;
+}
+
+.welcome-button {
+    font-style: bold;
+    font-size: 150%;
+    margin: 5px;
+}
+
+.welcome-button:hover,
+.welcome-link:hover {
+    background: black;
+    color: white;
+    font-style: bold;
+    font-size: 150%;
+    margin: 5px;
+}
+
+.welcome-link {
+    font-style: bold;
+    font-size: 150%;
+    margin: 5px;
+    color: grey;
+}
+
+.welcome-p {
+    font-style: bold;
+    font-size: 150%;
+    margin: 5px;
+    text-align: center;
+    color: red;
+    font-style: bold;
+    font-size: 150%;
+    margin: 5px;
+    text-align: center;
 }

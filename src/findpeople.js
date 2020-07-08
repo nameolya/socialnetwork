@@ -59,20 +59,17 @@ export default function FindPeople() {
             <div className="profile-box">
                 {persons.map((elem, idx) => {
                     return (
-                        <div key={idx}>
-                            <div>
-                                <div className="profile-image">
-                                    <img
-                                        className="small"
-                                        src={elem.imageurl}
-                                        onClick={(e) =>
-                                            routeChange(`${elem.id}`)
-                                        }
-                                    />
-                                </div>
+                        <div className="find-people-container" key={idx}>
+                            <div className="find-profile-image">
+                                <img
+                                    className="small"
+                                    src={elem.imageurl}
+                                    onClick={(e) => routeChange(`${elem.id}`)}
+                                />
                             </div>
-                            {elem.first}
-                            {elem.last}
+                            <div>
+                                {elem.first} {elem.last}
+                            </div>
                         </div>
                     );
                 })}

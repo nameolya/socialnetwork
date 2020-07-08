@@ -31,14 +31,17 @@ export default class Uploader extends React.Component {
     render() {
         return (
             <div className="uploader">
-                <h2 className="uploader-text">Want to change your image?</h2>
+                <h2 className="uploader-text">Edit profile picture</h2>
                 <input
                     type="file"
                     name="file"
+                    id="file"
+                    className="inputfile"
                     accept="image/*"
                     onChange={(e) => this.handleChange(e)}
                 />
-                <p onClick={this.props.toggleModal}>x</p>
+                <label for="file">Upload a file</label>
+                <h2 onClick={this.props.toggleModal}>x</h2>
             </div>
         );
     }

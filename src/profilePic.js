@@ -15,7 +15,7 @@ export default function ProfilePic({
         toggleModal,
         imageSize
     );
-    imageUrl = imageUrl || "/account1.png";
+    imageUrl = imageUrl || "/account4.png";
     let fullName = first + " " + last;
 
     let profilePicClass;

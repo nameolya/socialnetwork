@@ -16,7 +16,7 @@ export default function Profile(props) {
                 />
             </div>
 
-            <div className="bio-container">
+            <div className="profile-bio-container">
                 <h1>
                     {props.first} {props.last}
                 </h1>

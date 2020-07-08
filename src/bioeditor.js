@@ -76,18 +76,19 @@ class BioEditor extends Component {
             );
         } else if (this.props.bio) {
             return (
-                <div>
-                    <p>{this.props.bio}</p>
-                    <p
-                        className="edit-bio-p"
+                <div className="bio-container">
+                    <p className="bio-text">{this.props.bio}</p>
+
+                    <i
                         onClick={() =>
                             this.setState({
                                 bioEditorIsVisible: true,
                             })
                         }
-                    >
-                        Edit bio
-                    </p>
+                        class="em em-pencil2"
+                        aria-role="presentation"
+                        aria-label="PENCIL"
+                    ></i>
                 </div>
             );
         } else {

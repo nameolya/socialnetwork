@@ -24,18 +24,21 @@ export default class OtherProfile extends React.Component {
     }
     render() {
         return (
-            <div className="other-profile">
+            <div className="user-profile">
                 <div className="other-profile-pic-container">
                     <img
                         className="other-profile-pic"
                         src={this.state.imageUrl}
                     />
                 </div>
-                <h1>
-                    {this.state.first}
-                    {this.state.last}
-                </h1>
-                <p>{this.state.bio}</p>
+                <div className="profile-bio-container">
+                    <h1>
+                        {this.state.first} {this.state.last}
+                    </h1>
+                    <div className="bio-container">
+                        <p className="bio-text">{this.state.bio}</p>
+                    </div>
+                </div>
                 <FriendButton otherId={this.props.match.params.id} />
             </div>
         );

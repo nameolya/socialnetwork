@@ -45,22 +45,20 @@ export default function Chat() {
                             return (
                                 <div key={idx}>
                                     <div className="chat-message-container">
-                                        <div>
-                                            <div className="profile-image">
-                                                <img
-                                                    className="small"
-                                                    src={elem.imageurl}
-                                                    onClick={(e) =>
-                                                        routeChange(
-                                                            `${elem.id}`
-                                                        )
-                                                    }
-                                                />
-                                            </div>
+                                        <div className="profile-image">
+                                            <img
+                                                className="small"
+                                                src={elem.imageurl}
+                                                onClick={(e) =>
+                                                    routeChange(`${elem.id}`)
+                                                }
+                                            />
                                         </div>
-                                        <div>
+                                        <div className="chat-message-text-container">
                                             <p className="chat-message-text">
                                                 {elem.first} {elem.last}:{" "}
+                                            </p>
+                                            <p className="chat-message-text">
                                                 {elem.text}
                                             </p>
                                             <p className="chat-message-timestamp">
@@ -72,12 +70,13 @@ export default function Chat() {
                             );
                         })}
             </div>
-            <div className="chat-textarea">
+            <div className="chat-textarea-container">
                 <textarea
+                    className="chat-textarea"
                     placeholder="Add your message here"
                     onKeyDown={keyCheck}
                     rows="2"
-                    cols="40"
+                    cols="80"
                 ></textarea>
             </div>
         </div>

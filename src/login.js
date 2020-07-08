@@ -39,28 +39,42 @@ class Login extends Component {
 
     render() {
         return (
-            <div>
-                <h1>Login Component:</h1>
+            <div className="login">
+                <h1 className="welcome-component-header">Login</h1>
+
+                <input
+                    className="welcome-input"
+                    name="email"
+                    placeholder="email"
+                    type="email"
+                    onChange={(e) => this.handleChange(e)}
+                />
+                <input
+                    className="welcome-input"
+                    name="password"
+                    placeholder="password"
+                    type="password"
+                    onChange={(e) => this.handleChange(e)}
+                />
+                <button
+                    className="welcome-button"
+                    onClick={(e) => this.submit(e)}
+                >
+                    Submit
+                </button>
+
                 {this.state.error && (
                     <div> Something went wrong, please try again! </div>
                 )}
-                <form>
-                    <input
-                        name="email"
-                        placeholder="email"
-                        type="email"
-                        onChange={(e) => this.handleChange(e)}
-                    />
-                    <input
-                        name="password"
-                        placeholder="password"
-                        type="password"
-                        onChange={(e) => this.handleChange(e)}
-                    />
-                    <button onClick={(e) => this.submit(e)}>Submit</button>
-                </form>
-                <Link to="/reset"> Reset password </Link>
-                <Link to="/"> Register</Link>
+
+                <Link className="welcome-link" to="/reset">
+                    {" "}
+                    Reset password{" "}
+                </Link>
+                <Link className="welcome-link" to="/">
+                    {" "}
+                    Register
+                </Link>
             </div>
         );
     }

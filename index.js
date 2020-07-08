@@ -463,13 +463,17 @@ io.on("connection", async (socket) => {
     socket.on("newMessage", async (newMsg) => {
         console.log("This message is coming from chat.js component:", newMsg);
         console.log("user who sent newMsg is: ", userID);
-        db.addNewMsg(userID, newMsg).then((data) => {
-            console.log("new message from db:", data.rows[0].id);
-            db.getNewMsg(data.rows[0].id).then((data) => {
-                console.log("data from getNewMsg:", data.rows[0]);
-                io.sockets.emit("chatMessage", data.rows[0]);
-            });
-        });
+        db.addNewMsg(userID, newMsg)
+            .then((data) => {
+                console.log("new message from db:", data.rows[0].id);
+                db.getNewMsg(data.rows[0].id)
+                    .then((data) => {
+                        console.log("data from getNewMsg:", data.rows[0]);
+                        io.sockets.emit("chatMessage", data.rows[0]);
+                    })
+                    .catch((err) => console.log("error in getNewMsg:", err));
+            })
+            .catch((err) => console.log("error in addNewMsg", err));
     });
 });
 

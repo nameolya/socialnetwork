@@ -48,25 +48,25 @@ export default function Friends() {
             <div className="friends-box">
                 {friends.map((elem, idx) => {
                     return (
-                        <div key={idx}>
-                            <div className="profile-image">
+                        <div className="friend-container" key={idx}>
+                            <div className="friend-profile-image">
                                 <img
                                     className="small"
                                     onClick={(e) => routeChange(`${elem.id}`)}
                                     src={elem.imageurl}
                                 />
                             </div>
-                            <div>
-                                {elem.first}
-                                {elem.last}
-                                <p
-                                    onClick={(e) =>
-                                        dispatch(unfriend(`${elem.id}`))
-                                    }
-                                >
-                                    Remove from friends
-                                </p>
-                            </div>
+                            <p className="friends-p">
+                                {elem.first} {elem.last}
+                            </p>
+                            <button
+                                className="friends-button"
+                                onClick={(e) =>
+                                    dispatch(unfriend(`${elem.id}`))
+                                }
+                            >
+                                Remove from friends
+                            </button>
                         </div>
                     );
                 })}
@@ -79,24 +79,25 @@ export default function Friends() {
             <div className="wannabes-box">
                 {wannabes.map((elem, idx) => {
                     return (
-                        <div key={idx}>
-                            <div className="profile-image">
+                        <div className="wannabe-container" key={idx}>
+                            <div className="friend-profile-image">
                                 <img
                                     className="small"
                                     src={elem.imageurl}
                                     onClick={(e) => routeChange(`${elem.id}`)}
                                 />
                             </div>
-
-                            {elem.first}
-                            {elem.last}
-                            <p
+                            <p className="friends-p">
+                                {elem.first} {elem.last}
+                            </p>
+                            <button
+                                className="friends-button"
                                 onClick={(e) =>
                                     dispatch(acceptFriendRequest(`${elem.id}`))
                                 }
                             >
                                 Accept friend request
-                            </p>
+                            </button>
                         </div>
                     );
                 })}
