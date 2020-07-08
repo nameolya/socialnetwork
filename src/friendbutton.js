@@ -60,9 +60,11 @@ export default function FriendButton(props) {
     };
 
     return (
-        <div>
+        <div className="friend-button-container">
             {error && <p>something went wrong! try again...</p>}
-            <button onClick={(e) => onClick(e)}>{buttonText}</button>
+            <button className="friend-button" onClick={(e) => onClick(e)}>
+                {buttonText}
+            </button>
         </div>
     );
 }

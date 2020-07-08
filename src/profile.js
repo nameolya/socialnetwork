@@ -15,7 +15,6 @@ export default function Profile(props) {
                     imageSize={props.imageSize}
                 />
             </div>
-
             <div className="profile-bio-container">
                 <h1>
                     {props.first} {props.last}

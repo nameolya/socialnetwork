@@ -1,4 +1,4 @@
-* {
+x* {
     margin: 0;
     padding: 0;
     outline: 0;
@@ -244,6 +244,9 @@ a {
 /* FIND PEOPLE */
 .find-people-input {
     border-bottom: solid grey 2px;
+    border-top: solid white 2px;
+    border-right: solid white 2px;
+    border-left: solid white 2px;
     font-size: 150%;
 }
 .error {
@@ -274,7 +277,7 @@ a {
     width: 100%;
 }
 
-/* USER PROFILE */
+/* OTHER USER PROFILE */
 .other-profile-pic-container {
     grid-column-start: 3;
     grid-row-start: 3;
@@ -290,6 +293,18 @@ a {
 .other-profile-pic {
     width: 100%;
 }
+.friend-button-container {
+    grid-column-start: 5;
+    grid-row-start: 6;
+    justify-self: center;
+}
+
+.friend-button {
+    font-style: bold;
+    font-size: 120%;
+    margin: 5px;
+}
+
 /* BIO */
 .profile-bio-container {
     grid-column-start: 5;
@@ -303,11 +318,10 @@ a {
 }
 
 .bio-container {
-    height: 200px;
+    height: 180px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* background: rgb(227, 224, 224); */
     border: solid grey 2px;
     box-shadow: 2px 5px grey;
     margin-left: 30px;
@@ -384,7 +398,8 @@ a {
     margin: 5px;
 }
 
-.friends-button:hover {
+.friends-button:hover,
+.friend-button:hover {
     background: black;
     color: white;
 }
