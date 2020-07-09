@@ -93,7 +93,7 @@ class BioEditor extends Component {
             );
         } else {
             return (
-                <div>
+                <div className="bio-container">
                     <p
                         className="edit-bio-p"
                         onClick={() =>

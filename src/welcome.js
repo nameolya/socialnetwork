@@ -8,7 +8,7 @@ import Reset from "./reset";
 export default function Welcome() {
     return (
         <div className="welcome">
-            <h1 className="welcome-header">Welcome to CITRUS Network!</h1>
+            <h1 className="welcome-header">CITRUS Network</h1>
             <HashRouter>
                 <div className="welcome-container">
                     <Route exact path="/" component={Registration} />

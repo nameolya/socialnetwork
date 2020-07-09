@@ -76,7 +76,7 @@ export default function Chat() {
                     placeholder="Add your message here"
                     onKeyDown={keyCheck}
                     rows="2"
-                    cols="80"
+                    cols="100"
                 ></textarea>
             </div>
         </div>

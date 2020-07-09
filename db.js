@@ -142,3 +142,32 @@ module.exports.getNewMsg = (id) => {
         [id]
     );
 };
+
+module.exports.getBuddiesById = (user) => {
+    return db.query(
+        `SELECT users.id, first, last, imageUrl
+  FROM friendships
+  JOIN users
+  ON (accepted = true AND receiver_id = $1 AND sender_id = users.id)
+  OR (accepted = true AND sender_id = $1 AND receiver_id = users.id)`,
+        [user]
+    );
+};
+
+module.exports.getMutualsById = (other, user) => {
+    return db.query(
+        `SELECT users.id, first, last, imageUrl
+  FROM friendships
+  JOIN users
+  ON (accepted = true AND receiver_id = $1 AND sender_id = users.id)
+  OR (accepted = true AND sender_id = $1 AND receiver_id = users.id)`,
+
+        `SELECT users.id, first, last, imageUrl
+  FROM friendships
+  JOIN users
+  ON (accepted = true AND receiver_id = $1 AND sender_id = users.id)
+  OR (accepted = true AND sender_id = $1 AND receiver_id = users.id)`[
+            (other, user)
+        ]
+    );
+};

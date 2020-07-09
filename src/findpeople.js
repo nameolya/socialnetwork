@@ -49,7 +49,11 @@ export default function FindPeople() {
                     ></input>
                 </div>
                 <div>
-                    {personListVisibility && <h2>Recently joined:</h2>}
+                    {personListVisibility && (
+                        <h2 className="find-people-subtitle">
+                            Recently joined:
+                        </h2>
+                    )}
                     {persons.length == 0 && (
                         <p className="error">No match found</p>
                     )}
@@ -68,7 +72,9 @@ export default function FindPeople() {
                                 />
                             </div>
                             <div>
-                                {elem.first} {elem.last}
+                                <p className="friends-p">
+                                    {elem.first} {elem.last}
+                                </p>
                             </div>
                         </div>
                     );

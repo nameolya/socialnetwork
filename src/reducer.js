@@ -55,5 +55,24 @@ export default function reducer(state = {}, action) {
         };
     }
     console.log("state after ADD_MESSAGE:", state);
+
+    if (action.type == "GET_BUDDIES") {
+        state = {
+            ...state,
+            buddies: action.buddies,
+        };
+    }
+
+    console.log("state after GET_BUDDIES:", state);
+
+    if (action.type == "GET_CONNECTIONS") {
+        state = {
+            ...state,
+            connections: action.connections,
+        };
+    }
+
+    console.log("state after GET_CONNECTIONS:", state);
+
     return state;
 }

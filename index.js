@@ -108,6 +108,51 @@ app.get("/app/user", (req, res) => {
 });
 ///---FRIENDSHIPS----
 
+app.get("/app/buddies/:id", (req, res) => {
+    console.log(`ran ${req.method} at ${req.url} route`);
+
+    db.getBuddiesById(req.params.id)
+        .then((results) => {
+            console.log("getBuddiesById results.rows:", results.rows);
+            res.json(results.rows);
+        })
+        .catch((err) => {
+            console.log("error in getBuddiesById:", err);
+            res.sendStatus(500);
+        });
+});
+
+app.get("/app/buddies/", (req, res) => {
+    console.log(`ran ${req.method} at ${req.url} route`);
+
+    db.getBuddiesById(req.session.userID)
+        .then((results) => {
+            console.log(
+                "getBuddiesById (connections) results.rows:",
+                results.rows
+            );
+            res.json(results.rows);
+        })
+        .catch((err) => {
+            console.log("error in getBuddiesById:", err);
+            res.sendStatus(500);
+        });
+});
+
+// app.get("/app/mutual-buddies/:id", (req, res) => {
+//     console.log(`ran ${req.method} at ${req.url} route`);
+
+//     db.getMutualsById(req.params.id, req.session.userID)
+//         .then((results) => {
+//             console.log("getBuddiesById results.rows:", results.rows);
+//             res.json(results.rows);
+//         })
+//         .catch((err) => {
+//             console.log("error in getBuddiesById:", err);
+//             res.sendStatus(500);
+//         });
+// });
+
 app.get("/app/friends-wannabes", (req, res) => {
     console.log(`ran ${req.method} at ${req.url} route`);
 

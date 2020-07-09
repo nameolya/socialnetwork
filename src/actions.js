@@ -38,3 +38,21 @@ export function chatMessage(msg) {
         msg,
     };
 }
+
+export async function receiveBuddies(id) {
+    const { data } = await axios.get(`/app/buddies/${id}`);
+    console.log("data from axios.get /app/buddies/:id", data);
+    return {
+        type: "GET_BUDDIES",
+        buddies: data,
+    };
+}
+
+export async function receiveConnections() {
+    const { data } = await axios.get(`/app/buddies/`);
+    console.log("data from axios.get /app/buddies/", data);
+    return {
+        type: "GET_CONNECTIONS",
+        connections: data,
+    };
+}
